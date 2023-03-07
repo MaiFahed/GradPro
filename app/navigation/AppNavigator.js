@@ -1,36 +1,59 @@
 import { StatusBar } from 'expo-status-bar';
 import { Button, StyleSheet,TouchableOpacity , Text, View } from 'react-native';
 import * as React from 'react';
+// navs
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Link, NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+//screens from app
+import AppButtons from '../Componants/AppButtons';
+import ProfileScreen from '../screens/ProfileScreen';
+import MeUser from '../screens/MeUser'
+//icons
 import { MaterialIcons } from '@expo/vector-icons';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { SimpleLineIcons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
-// import welcomeScreen from './app/screens/welcomeScreen';
 
 const Discover = ({navigation}) =>(
-    <Text>Discover</Text> 
+  <View style={styles.outer}/>
   );
+  
   const Browse = ({navigation}) =>(
-    <Text>Browse</Text>
+    <View style={styles.outer}/>
   );
+  
   const Favourites = ({navigation}) =>(
-    <Text>Favourites</Text>
+    <View style={styles.outer}/>
   );
-  const Bag = ({navigation}) =>(
-    <Text>Bag</Text>
-  );
-  const Me = ({navigation}) =>(
-    <Text>Me</Text>
-  );
+
+const styles = StyleSheet.create({
+  outer: {
+    paddingTop:100,
+    paddingLeft:20,
+    paddingRight:20,
+    flex: 1,
+    backgroundColor: "#F9F1E8",
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignContent: 'center',
+    
+  },
+})
+
+const Stack = createNativeStackNavigator();
+const MyStack = () => (
+  <Stack.Navigator screenOptions={{headerShown:false}}>
+    <Stack.Screen name='MeUser' component={MeUser} />
+    <Stack.Screen name='ProfileScreen' component={ProfileScreen} />
+  </Stack.Navigator> 
+);
 
 const Tab = createBottomTabNavigator();
 
 const AppNavigator= () => {
-  return(                                                      //, headerShown:false
-    <Tab.Navigator screenOptions={{tabBarActiveTintColor:"green"}}> 
+  return(                                                      
+    <Tab.Navigator screenOptions={{tabBarActiveTintColor:"darkgreen", headerShown:false}}> 
 
       <Tab.Screen name="Discover" component={Discover} 
       options={{ tabBarIcon: ({color}) =>
@@ -44,7 +67,7 @@ const AppNavigator= () => {
       options={{ tabBarIcon: ({color}) =>
         <MaterialIcons name="favorite-outline" size={24} color={color} /> }}/>
 
-      <Tab.Screen name="Me" component={Me}
+      <Tab.Screen name="Me" component={MyStack}
       options={{ tabBarIcon: ({color}) =>
         <FontAwesome5 name="user-circle" size={24} color={color} />}} />
 
@@ -52,4 +75,6 @@ const AppNavigator= () => {
     );
 };
 
+
 export default AppNavigator;
+
