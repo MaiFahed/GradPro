@@ -17,7 +17,7 @@ export default function WelcomeScreen({}) {
     <View style={styles.outer}>
       <View style={styles.moneySaved}>
         <Text style={{paddingLeft:'33%',paddingTop:20, fontSize:20, fontWeight:"600"}}>Money Saved</Text>
-        <Text style={{paddingLeft:'45%',paddingTop:10, fontSize:20,color:"darkgreen", fontWeight:"600"}}>$40</Text>
+        <Text style={{paddingLeft:'45%',paddingTop:10, fontSize:20,color:'#009387', fontWeight:"600"}}>$40</Text>
       </View>
 
       <View style={{alignSelf:'center',position:'absolute',width:'100%', top:210}}>
@@ -34,7 +34,7 @@ export default function WelcomeScreen({}) {
       </View>
 
       <View style={{alignSelf:'center',position:'absolute', top:500, alignItems:'center'}}> 
-      <Ionicons name="restaurant" size={70} color="darkgreen" />
+      <Ionicons name="restaurant" size={70} color='#009387' />
       <Text style={styles.text}>Are you a store owner?</Text>
       <Text style={styles.text}>Join Go4Food and reduce food waste.</Text>
       </View>

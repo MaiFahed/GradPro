@@ -9,11 +9,21 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import AppNavigator from './app/navigation/AppNavigator'
 import MeUser from './app/screens/MeUser'
 import AppButtons from './app/Componants/AppButtons';
+import AppTextInput from './app/Componants/AppTextInput';
+import SignUp from './app/screens/SignUp';
+import SplashScreen from './app/screens/SplashScreen';
+import SignIn from './app/screens/SignIn';
+
+
 
 
 export default function App() {
   return (
-    // <MeUser/>
+    // <SignIn/>
+    // <NavigationContainer>
+    //   <SplashScreen/>
+    // </NavigationContainer>
+    // <SignUp/>
     <NavigationContainer>
       <AppNavigator/>
     </NavigationContainer>

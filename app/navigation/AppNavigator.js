@@ -53,7 +53,7 @@ const Tab = createBottomTabNavigator();
 
 const AppNavigator= () => {
   return(                                                      
-    <Tab.Navigator screenOptions={{tabBarActiveTintColor:"darkgreen", headerShown:false}}> 
+    <Tab.Navigator screenOptions={{tabBarActiveTintColor:'#009387', headerShown:false}}> 
 
       <Tab.Screen name="Discover" component={Discover} 
       options={{ tabBarIcon: ({color}) =>
