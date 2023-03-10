@@ -9,15 +9,16 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import AppButtons from '../Componants/AppButtons';
 import ProfileScreen from '../screens/ProfileScreen';
 import MeUser from '../screens/MeUser'
+import DiscoverScreen from '../screens/DiscoverScreen';
 //icons
 import { MaterialIcons } from '@expo/vector-icons';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { SimpleLineIcons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 
-const Discover = ({navigation}) =>(
-  <View style={styles.outer}/>
-  );
+// const Discover = ({navigation}) =>(
+//   <View style={styles.outer}/>
+//   );
   
   const Browse = ({navigation}) =>(
     <View style={styles.outer}/>
@@ -55,7 +56,7 @@ const AppNavigator= () => {
   return(                                                      
     <Tab.Navigator screenOptions={{tabBarActiveTintColor:'#009387', headerShown:false}}> 
 
-      <Tab.Screen name="Discover" component={Discover} 
+      <Tab.Screen name="Discover" component={DiscoverScreen} 
       options={{ tabBarIcon: ({color}) =>
         <AntDesign name="chrome" size={24} color={color} /> }}/>
 
