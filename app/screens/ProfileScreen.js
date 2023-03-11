@@ -8,7 +8,7 @@ export default function ProfileScreen() {
   return (
     <View style={styles.outer}>
       <View style={styles.name}>
-        <Text style={styles.textConst}>name                                                         Mai Fahed</Text>
+        <Text style={styles.textConst}>Name                                                         Mai Fahed</Text>
       </View>
 
       <View 

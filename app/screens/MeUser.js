@@ -7,6 +7,7 @@ import { Link, NavigationContainer, useNavigation } from '@react-navigation/nati
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 // screens from app
 import AppButtons from '../Componants/AppButtons'
+import colours from '../Componants/colours';
 import ProfileScreen from './ProfileScreen'
 //icons
 import { Ionicons } from '@expo/vector-icons';
@@ -17,7 +18,7 @@ export default function WelcomeScreen({}) {
     <View style={styles.outer}>
       <View style={styles.moneySaved}>
         <Text style={{paddingLeft:'33%',paddingTop:20, fontSize:20, fontWeight:"600"}}>Money Saved</Text>
-        <Text style={{paddingLeft:'45%',paddingTop:10, fontSize:20,color:'#009387', fontWeight:"600"}}>$40</Text>
+        <Text style={{paddingLeft:'45%',paddingTop:10, fontSize:20,color:colours.green, fontWeight:"600"}}>$40</Text>
       </View>
 
       <View style={{alignSelf:'center',position:'absolute',width:'100%', top:210}}>
@@ -34,7 +35,7 @@ export default function WelcomeScreen({}) {
       </View>
 
       <View style={{alignSelf:'center',position:'absolute', top:500, alignItems:'center'}}> 
-      <Ionicons name="restaurant" size={70} color='#009387' />
+      <Ionicons name="restaurant" size={70} color={colours.green} />
       <Text style={styles.text}>Are you a store owner?</Text>
       <Text style={styles.text}>Join Go4Food and reduce food waste.</Text>
       </View>
@@ -50,7 +51,7 @@ const styles = StyleSheet.create({
     paddingLeft:20,
     paddingRight:20,
     flex: 1,
-    backgroundColor: "#F9F1E8",
+    backgroundColor: colours.beige,
     flexDirection: 'row',
     justifyContent: 'center',
     alignContent: 'center',
@@ -58,13 +59,13 @@ const styles = StyleSheet.create({
   },
   moneySaved: {
     flex: 1,
-    backgroundColor: "white",
+    backgroundColor: colours.white,
     borderRadius:15,
     width: 100,
     height:100,
   },
   text: {
-    color:'#58534E',
+    color: colours.grey,
     fontWeight:"600",
   }
 })
