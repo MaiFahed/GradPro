@@ -1,5 +1,7 @@
-import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
-import React from 'react'
+import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import React from 'react';
+import { Formik } from 'formik';
+import * as Yup from 'yup';
 
 import { FontAwesome } from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons';
@@ -14,6 +16,11 @@ import SignUp from './SignUp';
 import AppNavigator from '../navigation/AppNavigator';
 import colours from '../Componants/colours';
 
+const validationSchema = Yup.object().shape({
+    email: Yup.string().required().email().label("Email"),
+    password: Yup.string().required().min(4).label("Password"),
+});
+
 export default function SignIn() {
     const navigation = useNavigation();
     return (
@@ -22,25 +29,40 @@ export default function SignIn() {
                 <Text style={styles.text_header}>Welcome!</Text>
             </View>
             <View style={styles.footer}>
-                <Text style={styles.text_footer}>Email</Text>
-                <View style={styles.action}>
-                    <FontAwesome name='user-o' color={colours.deepBlue} size={20} ></FontAwesome>
-                    <TextInput clearButtonMode='always' placeholder='Your email' style={styles.textInput} autoCapitalize='none' />
-                </View>
-                <Text style={[styles.text_footer, { marginTop: 35 }]}>Password</Text>
-                <View style={styles.action}>
-                    <FontAwesome name='lock' color={colours.deepBlue} size={20} ></FontAwesome>
-                    <TextInput clearButtonMode='always' secureTextEntry={true} placeholder='Your password' style={styles.textInput} autoCapitalize='none' />
-                </View>
+                <Formik initialValues={{ email: '', password: '' }} //values => console.log(values) () => navigation.navigate(AppNavigator)
+                    onSubmit={() => navigation.navigate(AppNavigator)}
+                    validationSchema={validationSchema}
+                >
+                    {({ handleChange, handleSubmit, errors, setFieldTouched, touched }) => (
+                        <>
+                            <Text style={styles.text_footer}>Email</Text>
+                            <View style={styles.action}>
+                                <FontAwesome name='user-o' color={colours.deepBlue} size={20} ></FontAwesome>
+                                <TextInput onBlur={()=> setFieldTouched("email")} onChangeText={handleChange("email")} clearButtonMode='always' placeholder='Your email' style={styles.textInput} autoCapitalize='none' />
+                            </View>
 
-                <View style={styles.button}>
-                    <TouchableOpacity style={styles.text0} onPress={()=> navigation.navigate("AppNavigator")} >
-                        <Text style={{color:colours.darkred,fontSize: 15,fontWeight: "600"}}>Sign In</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.signIn} onPress={()=> navigation.navigate("SignUp")} >
-                        <Text style={{color:colours.grey}}>You don't have an account? Sign up here.</Text>
-                    </TouchableOpacity>
-                </View>
+                            { touched.email && <Text style={{ color: colours.darkred }}>{errors.email}</Text>}
+
+                            <Text style={[styles.text_footer, { marginTop: 35 }]}>Password</Text>
+                            <View style={styles.action}>
+                                <FontAwesome name='lock' color={colours.deepBlue} size={20} ></FontAwesome>
+                                <TextInput onBlur={()=> setFieldTouched("password")} onChangeText={handleChange("password")} clearButtonMode='always' secureTextEntry={true} placeholder='Your password' style={styles.textInput} autoCapitalize='none' />
+                            </View>
+
+                            { touched.password && <Text style={{ color: colours.darkred }}>{errors.password}</Text>}
+
+                            <View style={styles.button}>
+                                <TouchableOpacity style={styles.text0} onPress={handleSubmit} >
+                                    <Text style={{ color: colours.darkred, fontSize: 15, fontWeight: "600" }}>Sign In</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity style={styles.signIn} onPress={() => navigation.navigate("SignUp")} >
+                                    <Text style={{ color: colours.grey }}>You don't have an account? Sign up here.</Text>
+                                </TouchableOpacity>
+                            </View>
+
+                        </>
+                    )}
+                </Formik>
             </View>
         </View>
     )
@@ -93,8 +115,8 @@ const styles = StyleSheet.create({
         marginTop: 50
     },
     signIn: {
-        position: 'absolute', 
-        paddingLeft: 50, 
+        position: 'absolute',
+        paddingLeft: 50,
         top: 300,
     },
     textSign: {
