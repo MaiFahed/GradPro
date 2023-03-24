@@ -1,6 +1,7 @@
 import { StyleSheet, Text, TextInput, TouchableOpacity, View, ScrollView } from 'react-native'
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import * as Yup from 'yup';
+import * as Location from 'expo-location';
 
 import { FontAwesome } from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons';
@@ -24,6 +25,19 @@ const validationSchema = Yup.object().shape({
 });
 
 export default function SignIn() {
+    const [location, setLocation]= useState();
+
+    const getLocation=  ()=> {
+        const { granted } =  Location.requestBackgroundPermissionsAsync();
+        if(!granted) return;
+        const {coords : { latitude, longitude}} = Location.getLastKnownPositionAsync(); // or current position
+        setLocation({ latitude, longitude})
+    }
+
+    useEffect( ()=>{
+       getLocation();
+    }, [])
+
     const navigation = useNavigation();
     return (
         <View style={styles.container}>
@@ -34,7 +48,7 @@ export default function SignIn() {
                 <ScrollView>
 
                 <Formik initialValues={{ firstName:'', lastName:'', email:'', password:'', country:'', phoneNumber:'' }}
-                    onSubmit={values => console.log(values)}
+                    onSubmit={values => console.log(location)}
                     validationSchema={validationSchema}
                 >
                     {({ handleChange, handleSubmit, errors, setFieldTouched, touched }) => (

@@ -9,10 +9,11 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import AppButtons from '../Componants/AppButtons'
 import colours from '../Componants/colours';
 import ProfileScreen from './ProfileScreen'
+import DetailsScreen from './DetailsScreen';
 //icons
 import { Ionicons } from '@expo/vector-icons';
 
-export default function WelcomeScreen({}) {
+export default function MeUser({}) {
   const navigation = useNavigation();
   return (
     <View style={styles.outer}>

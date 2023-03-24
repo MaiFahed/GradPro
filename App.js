@@ -10,26 +10,25 @@ import AppNavigator from './app/navigation/AppNavigator'
 import SignUp from './app/screens/SignUp';
 import SplashScreen from './app/screens/SplashScreen';
 import SignIn from './app/screens/SignIn';
+import DiscoverScreen from './app/screens/DiscoverScreen';
+import DetailsScreen from './app/screens/DetailsScreen';
+import SmpTest from './app/screens/SmpTest';
+import FeedNavigator from './app/navigation/FeedNavigator';
 
 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
-    // <SignIn/>
+    // <DetailsScreen/>
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         <Stack.Screen name='SplashScreen' component={SplashScreen} />
         <Stack.Screen name='SignIn' component={SignIn} />
         <Stack.Screen name='SignUp' component={SignUp} />
+        {/* <Stack.Screen name='Feed' component={FeedNavigator} /> */}
         <Stack.Screen name='AppNavigator' component={AppNavigator} />
       </Stack.Navigator>
     </NavigationContainer>
-
-
-    // <SignUp/>
-    // <NavigationContainer>
-    //   <AppNavigator/>
-    // </NavigationContainer>
   );
 }

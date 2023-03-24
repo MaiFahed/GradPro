@@ -10,6 +10,8 @@ import AppButtons from '../Componants/AppButtons';
 import ProfileScreen from '../screens/ProfileScreen';
 import MeUser from '../screens/MeUser'
 import DiscoverScreen from '../screens/DiscoverScreen';
+import DetailsScreen from '../screens/DetailsScreen';
+import FeedNavigator from './FeedNavigator';
 //icons
 import { MaterialIcons } from '@expo/vector-icons';
 import { FontAwesome5 } from '@expo/vector-icons';
@@ -56,7 +58,7 @@ const AppNavigator= () => {
   return(                                                      
     <Tab.Navigator screenOptions={{tabBarActiveTintColor:'#009387', headerShown:false}}> 
 
-      <Tab.Screen name="Discover" component={DiscoverScreen} 
+      <Tab.Screen name="DiscoverFeed" component={FeedNavigator} 
       options={{ tabBarIcon: ({color}) =>
         <AntDesign name="chrome" size={24} color={color} /> }}/>
 

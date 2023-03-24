@@ -1,9 +1,15 @@
-import { FlatList, ScrollView, StyleSheet, Text, View, StatusBar } from 'react-native'
+import { FlatList, ScrollView, StyleSheet, Text, View, StatusBar, Button } from 'react-native'
 import React from 'react'
 // import { SearchBar } from 'react-native-screens';
 import SearchBar from '../Componants/SearchBar';
 import CardRes from '../Componants/CardRes';
 import colours from '../Componants/colours';
+// navs
+import { useNavigation } from '@react-navigation/native';
+
+import DetailsScreen from './DetailsScreen';
+import ProfileScreen from './ProfileScreen';
+import SmpTest from './SmpTest';
 
 const Listing = [
     {
@@ -38,14 +44,14 @@ const ListingB = [
         title: 'Wakeup Coffee',
         subTitle: 100,
         image: require('../assets/dounts.jpg'),
-        count:2,
+        count: 2,
     },
     {
         id: 2,
         title: 'Mono Pizza',
         subTitle: 200,
         image: require('../assets/pizza.jpg'),
-        count:3,
+        count: 3,
     },
     {
         id: 3,
@@ -59,26 +65,30 @@ const ListingB = [
         title: 'Mrs Crepe',
         subTitle: 200,
         image: require('../assets/crepe.webp'),
-        count:1,
+        count: 1,
     },
 ];
 
 export default function DiscoverScreen() {
-    return (//
+    const navigation = useNavigation();
+    return (
         <View style={styles.outer}>
             <ScrollView nestedScrollEnabled='true'>
 
                 <View style={{ alignSelf: 'center', position: 'absolute', width: '95%', top: 57 }}>
-                    <SearchBar />
+                    {/* <SearchBar /> */}
+                    <Button title='click me' onPress={() => navigation.navigate("DetailsScreen")}/>
                 </View>
 
-                <View style={{ position: 'absolute', width: '100%', top: 120, backgroundColor: colours.beige }}>
+                {/* <View style={{ position: 'absolute', width: '100%', top: 120, backgroundColor: colours.beige }}>
                     <Text style={styles.text}> Recomended for you</Text>
                     <FlatList horizontal showsHorizontalScrollIndicator={false}
                         data={Listing}
                         keyExtractor={listing => listing.id.toString()}
                         renderItem={({ item }) =>
-                            <CardRes title={item.title} subTitle={"$" + item.subTitle} image={item.image} showCount={false} />}
+                            <CardRes title={item.title} subTitle={"$" + item.subTitle} image={item.image} showCount={false} 
+                             onPress={() => navigation.navigate("DetailsScreen")} 
+                            />}
                     />
                 </View>
                 <View style={{ position: 'absolute', width: '100%', top: 360, backgroundColor: colours.beige }}>
@@ -87,7 +97,9 @@ export default function DiscoverScreen() {
                         data={ListingB}
                         keyExtractor={ListingB => ListingB.id.toString()}
                         renderItem={({ item }) =>
-                            <CardRes title={item.title} subTitle={"$" + item.subTitle} image={item.image} showCount={true} count={item.count + " left"} />}
+                            <CardRes title={item.title} subTitle={"$" + item.subTitle} image={item.image} showCount={true} count={item.count + " left"} 
+                             onPress={()=> navigation.navigate("DetailsScreen", item)}
+                            />}
                     />
                 </View>
                 <View style={{ position: 'absolute', width: '100%', top: 600, backgroundColor: colours.beige }}>
@@ -96,9 +108,11 @@ export default function DiscoverScreen() {
                         data={Listing}
                         keyExtractor={listing => listing.id.toString()}
                         renderItem={({ item }) =>
-                            <CardRes title={item.title} subTitle={"$" + item.subTitle} image={item.image} showCount={false} />}
+                            <CardRes title={item.title} subTitle={"$" + item.subTitle} image={item.image} showCount={false}
+                             onPress={()=> navigation.navigate("DetailsScreen",item)}
+                            />}
                     />
-                </View>
+                </View> */}
             </ScrollView>
         </View>
     )

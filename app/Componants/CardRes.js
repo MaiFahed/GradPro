@@ -1,11 +1,11 @@
-import { StyleSheet, Image, Text, View, TouchableHighlight, TouchableOpacity } from 'react-native'
+import { StyleSheet, Image, Text, View, TouchableHighlight, TouchableOpacity, TouchableWithoutFeedback } from 'react-native'
 import React from 'react';
 import colours from './colours';
 import { Ionicons } from '@expo/vector-icons';
 
-export default function CardRes({ title, subTitle, image, showCount, count }) {
+export default function CardRes({ title, subTitle, image, showCount, count, onPress }) {
     return (
-        <TouchableOpacity>
+        <TouchableOpacity onPress={onPress}>
             <View style={styles.card}>
                 <Image style={styles.img} source={image} />
                 {showCount && <View style={styles.count}>
