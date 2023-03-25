@@ -9,6 +9,7 @@ import { useNavigation } from '@react-navigation/native';
 
 import DetailsScreen from './DetailsScreen';
 import ProfileScreen from './ProfileScreen';
+// import FeedNavigator from '../navigation/FeedNavigator';
 import SmpTest from './SmpTest';
 
 const Listing = [
@@ -76,18 +77,18 @@ export default function DiscoverScreen() {
             <ScrollView nestedScrollEnabled='true'>
 
                 <View style={{ alignSelf: 'center', position: 'absolute', width: '95%', top: 57 }}>
-                    {/* <SearchBar /> */}
-                    <Button title='click me' onPress={() => navigation.navigate("DetailsScreen")}/>
+                    <SearchBar />
+                    {/* <Button title='click me' onPress={() => navigation.navigate("DiscoverFeed",{screen:"Details"})}/> */}
                 </View>
 
-                {/* <View style={{ position: 'absolute', width: '100%', top: 120, backgroundColor: colours.beige }}>
+                <View style={{ position: 'absolute', width: '100%', top: 120, backgroundColor: colours.beige }}>
                     <Text style={styles.text}> Recomended for you</Text>
                     <FlatList horizontal showsHorizontalScrollIndicator={false}
                         data={Listing}
                         keyExtractor={listing => listing.id.toString()}
                         renderItem={({ item }) =>
                             <CardRes title={item.title} subTitle={"$" + item.subTitle} image={item.image} showCount={false} 
-                             onPress={() => navigation.navigate("DetailsScreen")} 
+                             onPress={() => navigation.navigate("DiscoverFeed",{screen:"Details", params:{...item}} )} 
                             />}
                     />
                 </View>
@@ -98,7 +99,7 @@ export default function DiscoverScreen() {
                         keyExtractor={ListingB => ListingB.id.toString()}
                         renderItem={({ item }) =>
                             <CardRes title={item.title} subTitle={"$" + item.subTitle} image={item.image} showCount={true} count={item.count + " left"} 
-                             onPress={()=> navigation.navigate("DetailsScreen", item)}
+                             onPress={()=> navigation.navigate("DiscoverFeed",{screen:"Details", params:{...item}})}
                             />}
                     />
                 </View>
@@ -109,10 +110,10 @@ export default function DiscoverScreen() {
                         keyExtractor={listing => listing.id.toString()}
                         renderItem={({ item }) =>
                             <CardRes title={item.title} subTitle={"$" + item.subTitle} image={item.image} showCount={false}
-                             onPress={()=> navigation.navigate("DetailsScreen",item)}
+                             onPress={()=> navigation.navigate("DiscoverFeed",{screen:"Details", params:{...item}})}
                             />}
                     />
-                </View> */}
+                </View>
             </ScrollView>
         </View>
     )

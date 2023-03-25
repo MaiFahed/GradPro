@@ -7,26 +7,26 @@ import { Link, NavigationContainer, useNavigation } from '@react-navigation/nati
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 export default function DetailsScreen({route}) {
-    // const listing= route.params;
+     const listing= route.params;
     return (
-        <View style={styles.container}>
-            <ImageBackground style={styles.header} source={require('../assets/dounts.jpg')} />
-            <View style={styles.footer}>
-                <Text style={styles.title}>Wakeup Coffee</Text>
-                {/* <Text>Sells dounts! </Text> */}
-                <Text style={styles.subTitle}>100</Text>
-            </View>
-            
-        </View>
         // <View style={styles.container}>
-        //     <ImageBackground style={styles.header} source={listing.image} />
+        //     <ImageBackground style={styles.header} source={require('../assets/dounts.jpg')} />
         //     <View style={styles.footer}>
-        //         <Text style={styles.title}>{listing.title}</Text>
+        //         <Text style={styles.title}>Wakeup Coffee</Text>
         //         {/* <Text>Sells dounts! </Text> */}
-        //         <Text style={styles.subTitle}>{listing.subTitle}</Text>
+        //         <Text style={styles.subTitle}>100</Text>
         //     </View>
             
         // </View>
+        <View style={styles.container}>
+            <ImageBackground style={styles.header} source={listing.image} />
+            <View style={styles.footer}>
+                <Text style={styles.title}>{listing.title}</Text>
+                {/* <Text>Sells dounts! </Text> */}
+                <Text style={styles.subTitle}>{listing.subTitle}</Text>
+            </View>
+            
+        </View>
 
     )
 }
