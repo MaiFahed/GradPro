@@ -26,7 +26,6 @@ export default function App() {
         <Stack.Screen name='SplashScreen' component={SplashScreen} />
         <Stack.Screen name='SignIn' component={SignIn} />
         <Stack.Screen name='SignUp' component={SignUp} />
-        {/* <Stack.Screen name='Feed' component={FeedNavigator} /> */}
         <Stack.Screen name='AppNavigator' component={AppNavigator} />
       </Stack.Navigator>
     </NavigationContainer>

@@ -38,7 +38,7 @@ export default function SignIn() {
                             <Text style={styles.text_footer}>Email</Text>
                             <View style={styles.action}>
                                 <FontAwesome name='user-o' color={colours.deepBlue} size={20} ></FontAwesome>
-                                <TextInput onBlur={()=> setFieldTouched("email")} onChangeText={handleChange("email")} clearButtonMode='always' placeholder='Your email' style={styles.textInput} autoCapitalize='none' />
+                                <TextInput onBlur={()=> setFieldTouched("email")} onChangeText={handleChange("email")} clearButtonMode='always' placeholder='Your email' style={styles.textInput} autoCapitalize='none' keyboardType='email-address'/>
                             </View>
 
                             { touched.email && <Text style={{ color: colours.darkred }}>{errors.email}</Text>}
