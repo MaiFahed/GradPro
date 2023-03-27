@@ -18,7 +18,6 @@ export default function DetailsScreen({ route }) {
     const modalRef = React.useRef(null);
     const fall = new Animated.Value(1);
 
-
     const [isOpen, setIsOpen] = useState(true);
 
     const [quantity, setQuantity] = useState(0);
@@ -29,8 +28,10 @@ export default function DetailsScreen({ route }) {
     }
 
     const increaseQuantity = () => {
-        setQuantity(quantity + 1);
-        updatePrice(quantity + 1);
+        if (quantity < listing.count) {
+            setQuantity(quantity + 1);
+            updatePrice(quantity + 1);
+        }
     };
 
     const decreaseQuantity = () => {
@@ -69,7 +70,8 @@ export default function DetailsScreen({ route }) {
                 </TouchableOpacity>
                 <Text style={styles.quantity}>{quantity}</Text>
                 <TouchableOpacity onPress={increaseQuantity}>
-                    <AntDesign name="pluscircle" size={35} color={colours.green} />
+                    <AntDesign style={quantity === listing.count ? styles.disabledQuantityButton : styles.quantityButton}
+                        name="pluscircle" size={35} color={colours.green} />
                 </TouchableOpacity>
             </View>
 
@@ -80,11 +82,11 @@ export default function DetailsScreen({ route }) {
             <View style={styles.seperator} />
 
             <View style={{ margin: 20 }}>
-                <ApplePayButton onPress={()=>console.log("ApplePay")} />
+                <ApplePayButton onPress={() => console.log("ApplePay")} />
             </View>
 
-            <TouchableOpacity onPress={()=> console.log("Other payment methods")}>
-                <Text style={{color:colours.green, fontWeight:'bold'}}>Other payment methods</Text>
+            <TouchableOpacity onPress={() => console.log("Other payment methods")}>
+                <Text style={{ color: colours.green, fontWeight: 'bold' }}>Other payment methods</Text>
             </TouchableOpacity>
 
         </View>
@@ -116,27 +118,22 @@ export default function DetailsScreen({ route }) {
                 opacity:
                     Animated.add(0.13, Animated.multiply(new Animated.Value(isOpen ? 1 : 0), 1.0))
             }}>
-                <Image source={listing.image} style={styles.img} />
-                <View style={styles.footer}>
-                    <Text style={styles.title}>{listing.title}</Text>
-                    <Text style={styles.subTitle}>{listing.subTitle}</Text>
-                    <Button title='click me' onPress={toggleBottomSheet} />
+                <View style={styles.detailsContainer}>
+                    <Image source={listing.image} style={styles.img} />
+
+                    <View style={styles.footer}>
+                        <Text style={styles.title}>{listing.title}</Text>
+                        <View style={{flexDirection:'row', alignItems:'center'}}>
+                            <EvilIcons name="clock" size={24} color={colours.grey} />
+                            <Text style={{ color: colours.grey }}> Collect now!</Text>
+                        </View>
+                        <Text style={styles.subTitle}>{listing.subTitle}</Text>
+                        <Button title='click me' onPress={toggleBottomSheet} />
+                    </View>
                 </View>
+
+
             </Animated.View>
-
-            {/* <Animated.View style={{
-                opacity:
-                    Animated.add(0.13, Animated.multiply(new Animated.Value(isOpen ? 1 : 0), 1.0))
-            }}>
-                <Image source={require('../assets/dounts.jpg')} style={styles.img} />
-                <View style={styles.footer}>
-                    <Text style={styles.title}>Wakeup Coffee</Text>
-                    <Text style={styles.subTitle}>100</Text>
-                    <Button title='click me' onPress={toggleBottomSheet} />
-                </View>
-            </Animated.View> */}
-
-
         </View>
 
     )
@@ -185,10 +182,14 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         color: colours.darkred,
     },
+    detailsContainer: {
+        flexDirection: 'column',
+    },
     modalInner: {
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
+        backgroundColor: colours.beige
         // top: 50,
     },
     hurryUpTxt: {
