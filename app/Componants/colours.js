@@ -9,4 +9,5 @@ export default{
     darkred: 'darkred',
     lightyellow: '#FBFAA8',
     darkgreen: 'darkgreen',
+    lightgray: 'lightgray'
 };
