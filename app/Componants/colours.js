@@ -6,8 +6,9 @@ export default{
     black: 'black',
     deepBlue: '#05375a',
     red: '#FF0000',
+    halfgray: '#A5A5A3',
     darkred: 'darkred',
     lightyellow: '#FBFAA8',
     darkgreen: 'darkgreen',
-    lightgray: 'lightgray'
+    lightgray: 'lightgray',
 };
