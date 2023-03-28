@@ -1,14 +1,15 @@
-import { Button, StyleSheet, Text, View, Image, Dimensions, TouchableOpacity } from 'react-native';
+import { Button, StyleSheet, Text, View, Image, Dimensions, TouchableOpacity, Alert } from 'react-native';
 import React, { useRef, useState, useCallback } from 'react';
 import colours from '../Componants/colours';
 import BottomSheet from 'reanimated-bottom-sheet';
 import Animated from 'react-native-reanimated';
 import ApplePayButton from '../Componants/PayButton';
-
+import FavIcon from '../Componants/FavIcon';
 
 //icons
 import { AntDesign } from '@expo/vector-icons';
 import { EvilIcons } from '@expo/vector-icons';
+import { FontAwesome } from '@expo/vector-icons';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -19,9 +20,9 @@ export default function DetailsScreen({ route }) {
     const fall = new Animated.Value(1);
 
     const [isOpen, setIsOpen] = useState(true);
-
     const [quantity, setQuantity] = useState(0);
     const [price, setPrice] = useState(0);
+    const [isFavorite, setIsFavorite] = useState(false);
 
     const updatePrice = (newQuantity) => {
         setPrice(newQuantity * listing.subTitle);
@@ -44,6 +45,10 @@ export default function DetailsScreen({ route }) {
     const toggleBottomSheet = () => {
         setIsOpen(!isOpen);
         modalRef.current?.snapTo(!isOpen ? 1 : 0);
+    };
+
+    const handleFav = () => {
+        setIsFavorite(!isFavorite);
     };
 
     const renderInner = () => (
@@ -82,7 +87,7 @@ export default function DetailsScreen({ route }) {
             <View style={styles.seperator} />
 
             <View style={{ margin: 20 }}>
-                <ApplePayButton onPress={() => console.log("ApplePay")} />
+                <ApplePayButton onPress={() => console.log(quantity)} />
             </View>
 
             <TouchableOpacity onPress={() => console.log("Other payment methods")}>
@@ -122,12 +127,24 @@ export default function DetailsScreen({ route }) {
                     <Image source={listing.image} style={styles.img} />
 
                     <View style={styles.footer}>
+
                         <Text style={styles.title}>{listing.title}</Text>
-                        <View style={{flexDirection:'row', alignItems:'center'}}>
+
+                        <View style={styles.favIcon}>
+                            <FavIcon name={isFavorite ? "heart" : "heart-o"}
+                                color={isFavorite ? colours.red : colours.black}
+                                onPress={handleFav} />
+                        </View>
+
+                        <Button title='hi' onPress={()=> console.log(isFavorite)}/>
+
+                        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                             <EvilIcons name="clock" size={24} color={colours.grey} />
                             <Text style={{ color: colours.grey }}> Collect now!</Text>
                         </View>
+
                         <Text style={styles.subTitle}>{listing.subTitle}</Text>
+
                         <Button title='click me' onPress={toggleBottomSheet} />
                     </View>
                 </View>
@@ -169,7 +186,8 @@ const styles = StyleSheet.create({
         height: windowHeight / 4,
     },
     footer: {
-        padding: 20,
+        margin: 10,
+        padding: 10
         // opacity: Animated.add(0.6, Animated.multiply(this.fall,1.0))
     },
     title: {
@@ -219,5 +237,13 @@ const styles = StyleSheet.create({
         width: '85%',
         backgroundColor: colours.halfgray,
         margin: 7
+    },
+    favIcon: {
+        // marginLeft: windowWidth / 3.3,
+        // position: 'absolute',
+        // top: -25
+        marginLeft: windowWidth / 1.25,
+        position: 'absolute',
+        top: 3
     }
 })

@@ -38,6 +38,7 @@ const Listing = [
         title: 'Ward Restaurant',
         subTitle: 200,
         image: require('../assets/musakhan.png'),
+        count: 7,
     },
 ];
 
@@ -76,7 +77,7 @@ export default function DiscoverScreen() {
     const navigation = useNavigation();
     return (
         <View style={styles.outer}>
-            <ScrollView nestedScrollEnabled='true'>
+            <ScrollView>
 
                 <View style={{ alignSelf: 'center', position: 'absolute', width: '95%', top: 57 }}>
                     <SearchBar />
@@ -88,7 +89,7 @@ export default function DiscoverScreen() {
                         data={Listing}
                         keyExtractor={listing => listing.id.toString()}
                         renderItem={({ item }) =>
-                            <CardRes title={item.title} subTitle={"$" + item.subTitle} image={item.image} showCount={false}
+                            <CardRes Animate={false} noAnimate={true} showFavIcon={false} addStyle={styles.addToCartBtn} style={styles.card} title={item.title} subTitle={"$" + item.subTitle} image={item.image} showCount={false}
                                 onPress={() => navigation.navigate("DiscoverFeed", { screen: "Details", params: { ...item } })}
                             />}
                     />
@@ -99,7 +100,7 @@ export default function DiscoverScreen() {
                         data={ListingB}
                         keyExtractor={ListingB => ListingB.id.toString()}
                         renderItem={({ item }) =>
-                            <CardRes title={item.title} subTitle={"$" + item.subTitle} image={item.image} showCount={true} count={item.count + " left"}
+                            <CardRes Animate={false} noAnimate={true} showFavIcon={false} addStyle={styles.addToCartBtn}  style={styles.card}  title={item.title} subTitle={"$" + item.subTitle} image={item.image} showCount={true} count={item.count + " left"}
                                 onPress={() => navigation.navigate("DiscoverFeed", { screen: "Details", params: { ...item } })}
                             />}
                     />
@@ -110,7 +111,7 @@ export default function DiscoverScreen() {
                         data={Listing}
                         keyExtractor={listing => listing.id.toString()}
                         renderItem={({ item }) =>
-                            <CardRes title={item.title} subTitle={"$" + item.subTitle} image={item.image} showCount={false}
+                            <CardRes Animate={false} noAnimate={true} showFavIcon={false} addStyle={styles.addToCartBtn} style={styles.card} title={item.title} subTitle={"$" + item.subTitle} image={item.image} showCount={false}
                                 onPress={() => navigation.navigate("DiscoverFeed", { screen: "Details", params: { ...item } })}
                             />}
                     />
@@ -132,5 +133,23 @@ const styles = StyleSheet.create({
         marginBottom: 17,
         color: colours.black,
         fontSize: 20
-    }
+    },
+    card: {
+        overflow: "hidden",
+        borderRadius: 15,
+        backgroundColor: colours.white,
+        marginBottom: 20,
+        marginLeft: 10,
+        width:200,
+    },
+    addToCartBtn: {
+        height: 30,
+        width: 30,
+        borderRadius: 20,
+        backgroundColor: colours.green,
+        position: 'absolute',
+        top: 25,
+        paddingLeft: 2,
+        marginLeft: 150,
+    },
 })

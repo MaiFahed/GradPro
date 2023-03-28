@@ -2,21 +2,30 @@ import { StyleSheet, Image, Text, View, TouchableHighlight, TouchableOpacity, To
 import React from 'react';
 import colours from './colours';
 import { Ionicons } from '@expo/vector-icons';
+import FavIcon from './FavIcon';
+import Animated from 'react-native-reanimated';
 
-export default function CardRes({ title, subTitle, image, showCount, count, onPress }) {
+// opacity: Animated.add(0.1, Animated.multiply(new Animated.Value(0), 1.0))
+export default function CardRes({ title, subTitle, image, showCount, count, onPress, style, addStyle, showFavIcon, Animate, noAnimate }) {
     return (
         <TouchableOpacity onPress={onPress}>
-            <View style={styles.card}>
+            <View style={style}>
+                { Animate && <Animated.View style={{opacity: Animated.add(0.5, Animated.multiply(new Animated.Value(0), 1.0))}}>
                 <Image style={styles.img} source={image} />
+                </Animated.View>}
+                {noAnimate && <Image style={styles.img} source={image} /> }
                 {showCount && <View style={styles.count}>
                     <Text style={styles.textCount}>{count}</Text>
                 </View>}
                 <View style={styles.detailContainer}>
                     <Text style={styles.title}>{title}</Text>
                     <Text style={styles.subtitle}>{subTitle}</Text>
-                    <View style={styles.addToCartBtn}>
+                    <View style={addStyle}>
                         <Ionicons name="ios-add-sharp" size={28} color={colours.white} />
                     </View>
+                    {showFavIcon && <View style={styles.favIcon}>
+                        <FavIcon name="heart" color={colours.red}/>
+                    </View>}
                 </View>
             </View>
         </TouchableOpacity>
@@ -24,28 +33,10 @@ export default function CardRes({ title, subTitle, image, showCount, count, onPr
 }
 
 const styles = StyleSheet.create({
-    card: {
-        overflow: "hidden",
-        borderRadius: 15,
-        backgroundColor: colours.white,
-        marginBottom: 20,
-        marginLeft: 10,
-        width: 200
-    },
     img: {
         width: '100%',
         height: 100,
         // resizeMode:'center'
-    },
-    addToCartBtn: {
-        height: 30,
-        width: 30,
-        borderRadius: 20,
-        backgroundColor: colours.green,
-        position: 'absolute',
-        top: 25,
-        paddingLeft: 2,
-        marginLeft: 150,
     },
     count: {
         height: 20,
@@ -73,5 +64,11 @@ const styles = StyleSheet.create({
     subtitle: {
         fontSize: 10,
         color: colours.grey,
-    }
+    },
+    favIcon: {
+        position: 'absolute',
+        top: 10,
+        paddingLeft: 2,
+        marginLeft: 300,
+    },
 })

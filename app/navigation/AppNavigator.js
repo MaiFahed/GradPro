@@ -12,6 +12,7 @@ import MeUser from '../screens/MeUser'
 import DiscoverScreen from '../screens/DiscoverScreen';
 import DetailsScreen from '../screens/DetailsScreen';
 import FeedNavigator from './FeedNavigator';
+import FavScreen from '../screens/FavScreen';
 //icons
 import { MaterialIcons } from '@expo/vector-icons';
 import { FontAwesome5 } from '@expo/vector-icons';
@@ -23,10 +24,6 @@ import { AntDesign } from '@expo/vector-icons';
 //   );
   
   const Browse = ({navigation}) =>(
-    <View style={styles.outer}/>
-  );
-  
-  const Favourites = ({navigation}) =>(
     <View style={styles.outer}/>
   );
 
@@ -66,7 +63,7 @@ const AppNavigator= () => {
       options={{ tabBarIcon: ({color}) =>
         <SimpleLineIcons name="bag" size={24} color={color} /> }}/>
 
-      <Tab.Screen name="Favourites" component={Favourites} 
+      <Tab.Screen name="Favourites" component={FavScreen} 
       options={{ tabBarIcon: ({color}) =>
         <MaterialIcons name="favorite-outline" size={24} color={color} /> }}/>
 
