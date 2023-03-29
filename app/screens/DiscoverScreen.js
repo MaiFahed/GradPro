@@ -73,17 +73,47 @@ const ListingB = [
     },
 ];
 
+const ListingC = [
+    {
+        id: 1,
+        title: 'Popeyes',
+        subTitle: 100,
+        image: require('../assets/popeyes.webp'),
+        count: 8,
+    },
+    {
+        id: 2,
+        title: 'Fresh Froyo',
+        subTitle: 200,
+        image: require('../assets/freshFroyojpg.jpg'),
+        count: 6,
+    },
+    {
+        id: 3,
+        title: 'Mandalina',
+        subTitle: 200,
+        image: require('../assets/juice.jpg'),
+        count: 4,
+    },
+    {
+        id: 4,
+        title: 'Lebanon Gateau',
+        subTitle: 200,
+        image: require('../assets/cake.jpg'),
+        count: 1,
+    },
+];
+
 export default function DiscoverScreen() {
     const navigation = useNavigation();
     return (
         <View style={styles.outer}>
             <ScrollView>
 
-                <View style={{ alignSelf: 'center', position: 'absolute', width: '95%', top: 57 }}>
+                <View style={{ alignSelf: 'center', position: 'absolute', width: '95%', top: 63 }}>
                     <SearchBar />
                 </View>
-
-                <View style={{ position: 'absolute', width: '100%', top: 120, backgroundColor: colours.beige }}>
+                <View style={{ width: '100%', top: 120, backgroundColor: colours.beige }}>
                     <Text style={styles.text}> Recomended for you</Text>
                     <FlatList horizontal showsHorizontalScrollIndicator={false}
                         data={Listing}
@@ -91,30 +121,36 @@ export default function DiscoverScreen() {
                         renderItem={({ item }) =>
                             <CardRes Animate={false} noAnimate={true} showFavIcon={false} addStyle={styles.addToCartBtn} style={styles.card} title={item.title} subTitle={"$" + item.subTitle} image={item.image} showCount={false}
                                 onPress={() => navigation.navigate("DiscoverFeed", { screen: "Details", params: { ...item } })}
-                            />}
+                            />
+                        }
                     />
                 </View>
-                <View style={{ position: 'absolute', width: '100%', top: 360, backgroundColor: colours.beige }}>
+                <View style={{ width: '100%', top: 104, backgroundColor: colours.beige }}>
                     <Text style={styles.text}> Limited edition</Text>
                     <FlatList horizontal showsHorizontalScrollIndicator={false}
                         data={ListingB}
                         keyExtractor={ListingB => ListingB.id.toString()}
                         renderItem={({ item }) =>
-                            <CardRes Animate={false} noAnimate={true} showFavIcon={false} addStyle={styles.addToCartBtn}  style={styles.card}  title={item.title} subTitle={"$" + item.subTitle} image={item.image} showCount={true} count={item.count + " left"}
+                            <CardRes Animate={false} noAnimate={true} showFavIcon={false} addStyle={styles.addToCartBtn} style={styles.card} title={item.title} subTitle={"$" + item.subTitle} image={item.image} showCount={true} count={item.count + " left"}
                                 onPress={() => navigation.navigate("DiscoverFeed", { screen: "Details", params: { ...item } })}
-                            />}
+                            />
+                        }
                     />
                 </View>
-                <View style={{ position: 'absolute', width: '100%', top: 600, backgroundColor: colours.beige }}>
+                <View style={{ width: '100%', top: 90, backgroundColor: colours.beige }}>
                     <Text style={styles.text}> Best selling </Text>
                     <FlatList horizontal showsHorizontalScrollIndicator={false}
-                        data={Listing}
-                        keyExtractor={listing => listing.id.toString()}
+                        data={ListingC}
+                        keyExtractor={listingC => listingC.id.toString()}
                         renderItem={({ item }) =>
                             <CardRes Animate={false} noAnimate={true} showFavIcon={false} addStyle={styles.addToCartBtn} style={styles.card} title={item.title} subTitle={"$" + item.subTitle} image={item.image} showCount={false}
                                 onPress={() => navigation.navigate("DiscoverFeed", { screen: "Details", params: { ...item } })}
-                            />}
+                            />
+                        }
                     />
+                </View>
+                <View style={{ width: '100%', top: 80, backgroundColor: colours.beige }}>
+                    <Text style={styles.text}> Coming Soon </Text>
                 </View>
             </ScrollView>
         </View>
@@ -140,7 +176,7 @@ const styles = StyleSheet.create({
         backgroundColor: colours.white,
         marginBottom: 20,
         marginLeft: 10,
-        width:200,
+        width: 200,
     },
     addToCartBtn: {
         height: 30,
