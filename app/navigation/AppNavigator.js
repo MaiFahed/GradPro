@@ -49,6 +49,14 @@ const MyStack = () => (
   </Stack.Navigator> 
 );
 
+const StackFav = createNativeStackNavigator();
+const FavStack = () => (
+  <StackFav.Navigator screenOptions={{headerShown:false}}>
+    <StackFav.Screen name='FavScreen' component={FavScreen} />
+    <StackFav.Screen name='Details' component={DetailsScreen} />
+  </StackFav.Navigator> 
+);
+
 const Tab = createBottomTabNavigator();
 
 const AppNavigator= () => {
@@ -63,7 +71,7 @@ const AppNavigator= () => {
       options={{ tabBarIcon: ({color}) =>
         <SimpleLineIcons name="bag" size={24} color={color} /> }}/>
 
-      <Tab.Screen name="Favourites" component={FavScreen} 
+      <Tab.Screen name="Favourites" component={FavStack} 
       options={{ tabBarIcon: ({color}) =>
         <MaterialIcons name="favorite-outline" size={24} color={color} /> }}/>
 
