@@ -1,15 +1,17 @@
 import { FlatList, ScrollView, StyleSheet, Text, View, StatusBar, Button } from 'react-native'
-import React from 'react'
+import React, { createContext, useState, useContext } from 'react'
 // import { SearchBar } from 'react-native-screens';
 import SearchBar from '../Componants/SearchBar';
 import CardRes from '../Componants/CardRes';
 import colours from '../Componants/colours';
+import MyCart from '../Componants/MyCart';
 // navs
 import { useNavigation } from '@react-navigation/native';
 
 import DetailsScreen from './DetailsScreen';
 import ProfileScreen from './ProfileScreen';
 import SmpTest from './SmpTest';
+
 
 const Listing = [
     {
@@ -104,12 +106,28 @@ const ListingC = [
     },
 ];
 
+function Searching() {
+    return (
+        <>
+            <FlatList vertical showsVerticalScrollIndicator={false} style={styles.flatList}
+                data={Listing}
+                keyExtractor={listing => listing.id.toString()}
+                renderItem={({ item }) =>
+                    <CardRes Animate={true} noAnimate={false} showFavIcon={true}
+                        addStyle={styles.addToCartBtn} style={styles.card}
+                        title={item.title} subTitle={"$" + item.subTitle}
+                        image={item.image} showCount={false}
+                    />}
+            />
+        </>
+    );
+}
+
 export default function DiscoverScreen() {
     const navigation = useNavigation();
     return (
         <View style={styles.outer}>
             <ScrollView>
-
                 <View style={{ alignSelf: 'center', position: 'absolute', width: '95%', top: 63 }}>
                     <SearchBar />
                 </View>

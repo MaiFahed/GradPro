@@ -9,20 +9,20 @@ import { EvilIcons } from '@expo/vector-icons';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
-export default function MyCart({ image, prePrice, title, subTitle, onPress }) {
+export default function MyCart({ image, prePrice, title, subTitle, onPress, unCode, quantity }) {
     return (
         <View style={styles.container}>
             <Image style={styles.img} source={image} />
             <View style={styles.count}>
-                <Text style={styles.textCount}>Quantity: 3</Text>
+                <Text style={styles.textCount}>Quantity : {quantity}</Text>
             </View>
             <View style={styles.detailContainer}>
                 <Text style={styles.title}>{title}</Text>
                 <Text style={styles.subtitle} >{subTitle}</Text>
                 <Text style={styles.preprice}>{prePrice}</Text>
-                <TouchableOpacity onPress={onPress} style={styles.trashIcon}>
-                    <EvilIcons name="trash" size={50} color={colours.red} />
-                </TouchableOpacity>
+                <View onPress={onPress} style={styles.code}>
+                    <Text style={{ fontWeight: '600', color: colours.black }}>{unCode}</Text>
+                </View>
             </View>
         </View>
     )
@@ -73,10 +73,12 @@ const styles = StyleSheet.create({
         color: colours.grey,
         textDecorationLine: 'line-through'
     },
-    trashIcon: {
-        marginLeft: 190,
+    code: {
+        marginLeft: 180,
         position: 'absolute',
-        top: 50
+        top: 20,
+        backgroundColor: colours.lightyellow,
+        padding: 4
     },
     preprice: {
         fontWeight: 'bold',

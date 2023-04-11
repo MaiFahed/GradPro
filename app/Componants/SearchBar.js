@@ -2,10 +2,10 @@ import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-nativ
 import React from 'react'
 import { EvilIcons } from '@expo/vector-icons';
 
-export default function SearchBar() {
+export default function SearchBar({onPress}) {
     return (
         <View style={styles.container}>
-            <TouchableOpacity style={styles.logoStyle}>
+            <TouchableOpacity onPress={onPress} style={styles.logoStyle}>
              <EvilIcons name="search" size={28} color="grey" style={{position:'absolute',top:12,paddingLeft:10}}/>    
             </TouchableOpacity>
             <TextInput clearButtonMode='always' placeholder='Search'style={styles.searchInput} />

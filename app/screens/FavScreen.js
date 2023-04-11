@@ -8,6 +8,19 @@ import { useNavigation } from '@react-navigation/native';
 
 import { AntDesign } from '@expo/vector-icons';
 
+function generateUniqueCode() {
+    let code = '';
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'; // The possible characters to be used in the code
+    const codeLength = 4; // The length of the code
+
+    for (let i = 0; i < codeLength; i++) {
+        const randomIndex = Math.floor(Math.random() * characters.length); // Generate a random index for the characters string
+        code += characters.charAt(randomIndex); // Append a random character to the code
+    }
+
+    return code;
+}
+const myUniqueCode = generateUniqueCode();
 
 const Listing = [
     {
@@ -53,6 +66,8 @@ const BuyListing = [
         prePrice: 10,
         image: require('../assets/popeyes.webp'),
         count: 8,
+        quantity: 5,
+        code: myUniqueCode,
     },
     {
         id: 2,
@@ -61,6 +76,8 @@ const BuyListing = [
         prePrice: 35,
         image: require('../assets/freshFroyojpg.jpg'),
         count: 6,
+        quantity: 1,
+        code: myUniqueCode,
     },
     {
         id: 3,
@@ -69,6 +86,8 @@ const BuyListing = [
         prePrice: 40,
         image: require('../assets/juice.jpg'),
         count: 4,
+        quantity: 4,
+        code: myUniqueCode,
     },
     {
         id: 4,
@@ -77,6 +96,8 @@ const BuyListing = [
         prePrice: 30,
         image: require('../assets/cake.jpg'),
         count: 1,
+        quantity: 2,
+        code: myUniqueCode,
     },
 ];
 
@@ -99,7 +120,7 @@ export default function FavScreen() {
                         data={BuyListing}
                         keyExtractor={BuyListing => BuyListing.id.toString()}
                         renderItem={({ item }) =>
-                            <MyCart title={item.title} subTitle={"$" + item.subTitle}
+                            <MyCart quantity={item.quantity} unCode={item.code} title={item.title} subTitle={"$" + item.subTitle}
                                 image={item.image} prePrice={"$" + item.prePrice} onPress={() => console.log("deleted")} />
                         }
                     />
