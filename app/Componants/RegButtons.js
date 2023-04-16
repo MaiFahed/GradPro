@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import { TouchableOpacity } from 'react-native'
+import colours from './colours';
 //icons
 import { FontAwesome } from '@expo/vector-icons';
 
@@ -14,15 +15,15 @@ export default function RegButtons({ title, onPress}) {
 
 const styles = StyleSheet.create({
   buttun: {
-    backgroundColor: "white",
-    borderRadius: 15,
+    backgroundColor: colours.green,
+    borderRadius: 25,
     height: 50,
   },
   text: {
-    color: "darkred",
-    paddingLeft:20,
-    paddingTop:16,
-    fontSize:15, 
+    color: colours.white,
+    textAlign:'center',
+    paddingTop:10,
+    fontSize:20, 
     fontWeight:"600"
   },
 

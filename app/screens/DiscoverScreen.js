@@ -20,6 +20,9 @@ const Listing = [
         subTitle: 100,
         image: require('../assets/checken.png'),
         count: 10,
+        rate: 5,
+        collect: '1:30-4:00',
+        oldPrice:5.5,
     },
     {
         id: 2,
@@ -27,6 +30,9 @@ const Listing = [
         subTitle: 200,
         image: require('../assets/burger.jpg'),
         count: 15,
+        rate: 4,
+        collect: '2:00-5:00',
+        oldPrice:95,
     },
     {
         id: 3,
@@ -34,6 +40,9 @@ const Listing = [
         subTitle: 200,
         image: require('../assets/shawerma.avif'),
         count: 9,
+        rate: 3,
+        collect: '3:30-4:00',
+        oldPrice:15,
     },
     {
         id: 4,
@@ -41,6 +50,9 @@ const Listing = [
         subTitle: 200,
         image: require('../assets/musakhan.png'),
         count: 7,
+        rate: 2,
+        collect: '4:00-5:00',
+        oldPrice:25,
     },
 ];
 
@@ -51,6 +63,9 @@ const ListingB = [
         subTitle: 100,
         image: require('../assets/dounts.jpg'),
         count: 2,
+        rate: 4,
+        collect: '3:30-5:00',
+        oldPrice:55,
     },
     {
         id: 2,
@@ -58,6 +73,9 @@ const ListingB = [
         subTitle: 200,
         image: require('../assets/pizza.jpg'),
         count: 3,
+        rate: 2,
+        collect: '1:00-2:00',
+        oldPrice:40,
     },
     {
         id: 3,
@@ -65,6 +83,9 @@ const ListingB = [
         subTitle: 200,
         image: require('../assets/mooncake.jpg'),
         count: 4,
+        rate: 1.5,
+        collect: '3:00-5:00',
+        oldPrice:50,
     },
     {
         id: 4,
@@ -72,6 +93,9 @@ const ListingB = [
         subTitle: 200,
         image: require('../assets/crepe.webp'),
         count: 1,
+        rate:3.5,
+        collect: '6:00-8:00',
+        oldPrice:100,
     },
 ];
 
@@ -82,6 +106,9 @@ const ListingC = [
         subTitle: 100,
         image: require('../assets/popeyes.webp'),
         count: 8,
+        rate: 5,
+        collect: '7:30-9:00',
+        oldPrice:3,
     },
     {
         id: 2,
@@ -89,6 +116,9 @@ const ListingC = [
         subTitle: 200,
         image: require('../assets/freshFroyojpg.jpg'),
         count: 6,
+        rate: 2.5,
+        collect: '7:00-8:30',
+        oldPrice:5,
     },
     {
         id: 3,
@@ -96,6 +126,9 @@ const ListingC = [
         subTitle: 200,
         image: require('../assets/juice.jpg'),
         count: 4,
+        rate: 4,
+        collect: '6:00-8:00',
+        oldPrice:7,
     },
     {
         id: 4,
@@ -103,6 +136,9 @@ const ListingC = [
         subTitle: 200,
         image: require('../assets/cake.jpg'),
         count: 1,
+        rate: 4.5,
+        collect: '7:00-9:00',
+        oldPrice:8,
     },
 ];
 

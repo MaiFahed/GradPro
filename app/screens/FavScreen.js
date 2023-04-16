@@ -27,33 +27,41 @@ const Listing = [
         id: 5,
         title: 'Wakeup Coffee',
         subTitle: 20,
-        prePrice: 10,
+        oldPrice: 10,
         image: require('../assets/dounts.jpg'),
         count: 2,
+        rate: 5,
+        collect: '7:00-8:00'
     },
     {
         id: 6,
         title: 'Mono Pizza',
         subTitle: 10,
-        prePrice: 30,
+        oldPrice: 30,
         image: require('../assets/pizza.jpg'),
         count: 3,
+        rate: 5,
+        collect: '7:00-8:00'
     },
     {
         id: 3,
         title: 'Shawerman',
         subTitle: 25,
-        prePrice: 40,
+        oldPrice: 40,
         image: require('../assets/shawerma.avif'),
         count: 9,
+        rate: 5,
+        collect: '7:00-8:00'
     },
     {
         id: 4,
         title: 'Ward Restaurant',
         subTitle: 15,
-        prePrice: 35,
+        oldPrice: 35,
         image: require('../assets/musakhan.png'),
         count: 7,
+        rate: 5,
+        collect: '7:00-8:00'
     },
 
 ];
@@ -63,41 +71,49 @@ const BuyListing = [
         id: 1,
         title: 'Popeyes',
         subTitle: 20,
-        prePrice: 10,
+        oldPrice: 10,
         image: require('../assets/popeyes.webp'),
         count: 8,
         quantity: 5,
         code: myUniqueCode,
+        rate: 5,
+        collect: '7:00-8:00'
     },
     {
         id: 2,
         title: 'Fresh Froyo',
         subTitle: 15,
-        prePrice: 35,
+        oldPrice: 35,
         image: require('../assets/freshFroyojpg.jpg'),
         count: 6,
         quantity: 1,
         code: myUniqueCode,
+        rate: 5,
+        collect: '7:00-8:00'
     },
     {
         id: 3,
         title: 'Mandalina',
         subTitle: 25,
-        prePrice: 40,
+        oldPrice: 40,
         image: require('../assets/juice.jpg'),
         count: 4,
         quantity: 4,
         code: myUniqueCode,
+        rate: 5,
+        collect: '7:00-8:00'
     },
     {
         id: 4,
         title: 'Lebanon Gateau',
         subTitle: 10,
-        prePrice: 30,
+        oldPrice: 30,
         image: require('../assets/cake.jpg'),
         count: 1,
         quantity: 2,
         code: myUniqueCode,
+        rate: 5,
+        collect: '7:00-8:00'
     },
 ];
 
@@ -121,7 +137,7 @@ export default function FavScreen() {
                         keyExtractor={BuyListing => BuyListing.id.toString()}
                         renderItem={({ item }) =>
                             <MyCart quantity={item.quantity} unCode={item.code} title={item.title} subTitle={"$" + item.subTitle}
-                                image={item.image} prePrice={"$" + item.prePrice} onPress={() => console.log("deleted")} />
+                                image={item.image} prePrice={"$" + item.oldPrice} onPress={() => console.log("deleted")} />
                         }
                     />
                 </View>

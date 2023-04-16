@@ -5,11 +5,14 @@ import BottomSheet from 'reanimated-bottom-sheet';
 import Animated from 'react-native-reanimated';
 import ApplePayButton from '../Componants/PayButton';
 import FavIcon from '../Componants/FavIcon';
-
+import RegButtons from '../Componants/RegButtons';
 //icons
 import { AntDesign } from '@expo/vector-icons';
 import { EvilIcons } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { Feather } from '@expo/vector-icons';
+import { FontAwesome5 } from '@expo/vector-icons';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -19,7 +22,11 @@ export default function DetailsScreen({ route }) {
     const modalRef = React.useRef(null);
     const fall = new Animated.Value(1);
 
+    const ingRef = React.useRef(null);
+    const ingFall = new Animated.Value(1);
+
     const [isOpen, setIsOpen] = useState(true);
+    const [ingisOpen, ingsetIsOpen] = useState(true);
     const [quantity, setQuantity] = useState(0);
     const [price, setPrice] = useState(0);
     const [isFavorite, setIsFavorite] = useState(false);
@@ -45,6 +52,11 @@ export default function DetailsScreen({ route }) {
     const toggleBottomSheet = () => {
         setIsOpen(!isOpen);
         modalRef.current?.snapTo(!isOpen ? 1 : 0);
+    };
+
+    const ingtoggleBottomSheet = () => {
+        ingsetIsOpen(!ingisOpen);
+        ingRef.current?.snapTo(!ingisOpen ? 1 : 0);
     };
 
     const handleFav = () => {
@@ -106,6 +118,22 @@ export default function DetailsScreen({ route }) {
         </View>
     );
 
+    const ingrenderInner = () => (
+        <View style={styles.ingmodalInner}>
+            <FontAwesome5 name="surprise" size={70} color={colours.grey} />
+            <Text style={{ fontWeight: 'bold', fontSize: 16.5, top: 25 }}>
+                Your bag is a surprise
+            </Text>
+            <View style={{ backgroundColor: colours.beige, top: 40, width: 500, height: 200 }}>
+                <Text style={{ fontSize: 14, textAlign: 'center', paddingRight: 100, paddingLeft: 100 }}>
+                    We wish we could tell you what exactly will be in your surprise bag, but it's
+                    always a surprise! The store will fill it with a selection of their unsold items.
+                    If you have questions about ingredients, please ask the store.
+                </Text>
+            </View>
+        </View>
+    );
+
     return (
         <View style={styles.container}>
             <BottomSheet
@@ -119,37 +147,104 @@ export default function DetailsScreen({ route }) {
                 enabledGestureInteraction={true}
                 onCloseEnd={() => setIsOpen(true)}
             />
+            <BottomSheet
+                ref={ingRef}
+                snapPoints={[300, 0]}
+                renderContent={ingrenderInner}
+                renderHeader={renderHead}
+                initialSnap={1}
+                callbackNode={ingFall}
+                animateOnMount={false}
+                enabledGestureInteraction={true}
+                onCloseEnd={() => ingsetIsOpen(true)}
+            />
             <Animated.View style={{
                 opacity:
-                    Animated.add(0.13, Animated.multiply(new Animated.Value(isOpen ? 1 : 0), 1.0))
+                    Animated.add(0.13, Animated.multiply(new Animated.Value(ingisOpen ? 1 : 0), 1.0))
             }}>
-                <View style={styles.detailsContainer}>
-                    <Image source={listing.image} style={styles.img} />
+                <Animated.View style={{
+                    opacity:
+                        Animated.add(0.13, Animated.multiply(new Animated.Value(isOpen ? 1 : 0), 1.0))
+                }}>
+                    <View style={styles.detailsContainer}>
+                        <Image source={listing.image} style={styles.img} />
 
-                    <View style={styles.footer}>
+                        <View style={styles.footer}>
+                            <Text style={styles.title}>{listing.title}</Text>
 
-                        <Text style={styles.title}>{listing.title}</Text>
+                            <View style={styles.favIcon}>
+                                <FavIcon name={isFavorite ? "heart" : "heart-o"}
+                                    color={isFavorite ? colours.red : colours.black}
+                                    onPress={handleFav} />
+                            </View>
 
-                        <View style={styles.favIcon}>
-                            <FavIcon name={isFavorite ? "heart" : "heart-o"}
-                                color={isFavorite ? colours.red : colours.black}
-                                onPress={handleFav} />
+                            {/* <View style={{ flexDirection: 'row', alignItems: 'center', top: 10 }}>
+                                <AntDesign name="inbox" size={24} color={colours.darkgreen} />
+                                <Text style={{ color: colours.black }}> Magic Box Mini</Text>
+                            </View>*/}
+
+                            <View style={{ flexDirection: 'row', alignItems: 'flex-end', top: 5 }}>
+                                <MaterialCommunityIcons name="hand-coin-outline" size={24} color={colours.darkgreen} />
+                                <Text style={{ textDecorationLine: 'line-through', color: colours.black, fontSize: 15, textAlign: 'right' }}>
+                                    {listing.oldPrice}$ 
+                                </Text>
+                                <Text style={styles.subTitle}>   {listing.subTitle}$</Text>
+                            </View>
+
+                            <View style={{ flexDirection: 'row', alignItems: 'center', top: 13 }}>
+                                <Feather name="clock" size={20} color={colours.darkgreen} />
+                                <Text style={{ color: colours.black }}> Collect: {listing.collect}</Text>
+                            </View>
+
+                            <View style={styles.fullSeperator} />
+
+                            <Text style={{ top: 45, fontWeight: 'bold', fontSize: 12 }}>WHAT COULD YOU GET?</Text>
+
+                            <Text numberOfLines={2} style={{ top: 53, }}>In your Magic box you can find fried chicken,
+                                fries and many other surprise products. </Text>
+
+                            <TouchableOpacity style={styles.ingredients} onPress={ingtoggleBottomSheet} >
+                                <Text style={styles.innerIng}>Ingredients & allergens</Text>
+                            </TouchableOpacity>
+
+                            <Text style={{ top: 90, paddingLeft: windowWidth / 4.5, fontWeight: 'bold', fontSize: 12 }}>
+                                WHAT OTHER PEOPLE ARE SAYING
+                            </Text>
+
+                            <Text style={{ top: 100, paddingLeft: windowWidth / 2.8, fontWeight: 'bold', }}>
+                                <AntDesign name="staro" size={30} color={colours.darkgreen} />
+                                <Text style={{ color: colours.black, fontSize: 28 }}> {listing.rate} / 5</Text>
+                            </Text>
+
+                            <View style={[styles.seperator, { backgroundColor: 'lightgray', top: windowHeight / 8.8, width: '60%', marginLeft: 80 }]} />
+
+                            <View style={{ flexDirection: 'row', alignItems: 'center', paddingLeft: windowWidth / 3, top: 105 }}>
+                                <FontAwesome5 name="smile-wink" size={24} color={colours.darkgreen} />
+                                <Text style={{ color: colours.black }}>    Friendly Staff</Text>
+                            </View>
+
+                            <View style={{ flexDirection: 'row', alignItems: 'center', paddingLeft: windowWidth / 3, top: 109 }}>
+                                <FontAwesome5 name="coins" size={24} color={colours.darkgreen} />
+                                <Text style={{ color: colours.black }}>    Great Value</Text>
+                            </View>
+
+                            <View style={{ flexDirection: 'row', alignItems: 'center', paddingLeft: windowWidth / 3.1, top: 110 }}>
+                                <MaterialCommunityIcons name="clock-fast" size={30} color={colours.darkgreen} />
+                                <Text style={{ color: colours.black }}>    Quick collection</Text>
+                            </View>
+
+                            <View style={{ top: 130 }}>
+                                <RegButtons title={"Reserve"} onPress={toggleBottomSheet} />
+                            </View>
+
+                            <View style={{ top: 140 }}>
+                                <RegButtons title={"Donate"} onPress={()=>console.log("donate")} />
+                            </View>
+
                         </View>
-
-                        <Button title='hi' onPress={()=> console.log(isFavorite)}/>
-
-                        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                            <EvilIcons name="clock" size={24} color={colours.grey} />
-                            <Text style={{ color: colours.grey }}> Collect now!</Text>
-                        </View>
-
-                        <Text style={styles.subTitle}>{listing.subTitle}</Text>
-
-                        <Button title='click me' onPress={toggleBottomSheet} />
                     </View>
-                </View>
 
-
+                </Animated.View>
             </Animated.View>
         </View>
 
@@ -186,17 +281,14 @@ const styles = StyleSheet.create({
         height: windowHeight / 4,
     },
     footer: {
-        margin: 10,
         padding: 10
-        // opacity: Animated.add(0.6, Animated.multiply(this.fall,1.0))
     },
     title: {
         fontSize: 24,
         fontWeight: 'bold',
     },
     subTitle: {
-        marginVertical: 10,
-        fontSize: 17,
+        fontSize: 15,
         fontWeight: 'bold',
         color: colours.darkred,
     },
@@ -209,6 +301,13 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         backgroundColor: colours.beige
         // top: 50,
+    },
+    ingmodalInner: {
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: colours.beige,
+        padding: 20,
     },
     hurryUpTxt: {
         flexDirection: 'row',
@@ -238,12 +337,32 @@ const styles = StyleSheet.create({
         backgroundColor: colours.halfgray,
         margin: 7
     },
+    fullSeperator: {
+        position: 'absolute',
+        height: 1,
+        width: windowWidth,
+        top: 114,
+        backgroundColor: colours.lightgray,
+    },
     favIcon: {
-        // marginLeft: windowWidth / 3.3,
-        // position: 'absolute',
-        // top: -25
         marginLeft: windowWidth / 1.25,
         position: 'absolute',
-        top: 3
-    }
+        top: 20
+    },
+    ingredients: {
+        backgroundColor: colours.beige,
+        borderWidth: 2,
+        borderColor: colours.lightgray,
+        borderStyle: 'dashed',
+        width: '100%',
+        height: 50,
+        top: 70,
+    },
+    innerIng: {
+        color: "darkred",
+        paddingLeft: windowWidth / 4,
+        paddingTop: 15,
+        fontSize: 15,
+        fontWeight: "600"
+    },
 })

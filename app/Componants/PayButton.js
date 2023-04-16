@@ -7,7 +7,7 @@ export default function ApplePayButton({onPress}) {
     return (
       <View>
         <Button
-          title="Pay"
+          title='Pay'
           type="solid"
           onPress={onPress}
           buttonStyle={{
