@@ -11,7 +11,7 @@ const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 export default function MyCart({ image, prePrice, title, subTitle, onPress, unCode, quantity }) {
     return (
-        <View style={styles.container}>
+        <TouchableOpacity onPress={onPress} style={styles.container}>
             <Image style={styles.img} source={image} />
             <View style={styles.count}>
                 <Text style={styles.textCount}>Quantity : {quantity}</Text>
@@ -20,11 +20,11 @@ export default function MyCart({ image, prePrice, title, subTitle, onPress, unCo
                 <Text style={styles.title}>{title}</Text>
                 <Text style={styles.subtitle} >{subTitle}</Text>
                 <Text style={styles.preprice}>{prePrice}</Text>
-                <View onPress={onPress} style={styles.code}>
+                <View  style={styles.code}>
                     <Text style={{ fontWeight: '600', color: colours.black }}>{unCode}</Text>
                 </View>
             </View>
-        </View>
+        </TouchableOpacity>
     )
 }
 

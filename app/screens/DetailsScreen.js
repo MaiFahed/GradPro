@@ -27,7 +27,7 @@ export default function DetailsScreen({ route }) {
 
     const [isOpen, setIsOpen] = useState(true);
     const [ingisOpen, ingsetIsOpen] = useState(true);
-    const [quantity, setQuantity] = useState(0);
+    const [quantity, setQuantity] = useState(1);
     const [price, setPrice] = useState(0);
     const [isFavorite, setIsFavorite] = useState(false);
 
@@ -43,7 +43,7 @@ export default function DetailsScreen({ route }) {
     };
 
     const decreaseQuantity = () => {
-        if (quantity > 0) {
+        if (quantity > 1) {
             setQuantity(quantity - 1);
             updatePrice(quantity - 1);
         }
@@ -82,7 +82,7 @@ export default function DetailsScreen({ route }) {
 
             <View style={styles.quantityContainer}>
                 <TouchableOpacity onPress={decreaseQuantity}>
-                    <AntDesign style={quantity === 0 ? styles.disabledQuantityButton : styles.quantityButton}
+                    <AntDesign style={quantity === 1 ? styles.disabledQuantityButton : styles.quantityButton}
                         name="minuscircle" size={35} />
                 </TouchableOpacity>
                 <Text style={styles.quantity}>{quantity}</Text>

@@ -3,10 +3,15 @@ import React, { useState } from 'react'
 import colours from '../Componants/colours'
 import CardRes from '../Componants/CardRes';
 import MyCart from '../Componants/MyCart';
+import BottomSheet from 'reanimated-bottom-sheet';
+import Animated from 'react-native-reanimated';
+import GetStart from '../Componants/GetStart';
 // navs
 import { useNavigation } from '@react-navigation/native';
 
 import { AntDesign } from '@expo/vector-icons';
+import { FontAwesome } from '@expo/vector-icons';
+import { Button } from 'react-native-elements/dist/buttons/Button';
 
 function generateUniqueCode() {
     let code = '';
@@ -122,9 +127,71 @@ const windowHeight = Dimensions.get('window').height;
 
 export default function FavScreen() {
     const navigation = useNavigation();
+    const modalRef = React.useRef(null);
+    const fall = new Animated.Value(1);
+
     const [modalOpen, setModalOpen] = useState(false);
+    const [isOpen, setIsOpen] = useState(true);
+    const [rating, setRating] = useState(0);
+
+
+    const handlePress = (rateNo) => {
+        setRating(rateNo);
+    };
+
+    const renderStar = (rateNo) => {
+        return (
+            <TouchableOpacity onPress={() => handlePress(rateNo)}>
+                <FontAwesome
+                    name={rateNo <= rating ? 'star' : 'star-o'}
+                    size={40}
+                    color={rateNo <= rating ? colours.green : 'gray'}
+                />
+            </TouchableOpacity>
+        );
+    };
+
+    const toggleBottomSheet = () => {
+        setIsOpen(!isOpen);
+        modalRef.current?.snapTo(!isOpen ? 1 : 0);
+    };
+
+    const renderHead = () => (
+        <View style={styles.headModal}>
+            <View style={styles.panelHeader}>
+                <View style={styles.panelHandel} />
+            </View>
+        </View>
+    );
+    const renderInner = () => (
+        <View style={styles.modalInner}>
+            <Text style={styles.titleRate}>What would you rate this order:</Text>
+            <View style={styles.ratingContainer}>
+                {renderStar(1)}
+                {renderStar(2)}
+                {renderStar(3)}
+                {renderStar(4)}
+                {renderStar(5)}
+            </View>
+            <TouchableOpacity style={styles.buttonRate} onPress={()=> console.log(rating)}>
+                <Text style={styles.buttonText}>Rate</Text>
+            </TouchableOpacity>
+        </View>
+    );
+
     return (
         <View style={styles.container}>
+            <BottomSheet
+                ref={modalRef}
+                snapPoints={[200, 0]}
+                renderContent={renderInner}
+                renderHeader={renderHead}
+                initialSnap={1}
+                callbackNode={fall}
+                animateOnMount={false}
+                enabledGestureInteraction={true}
+                onCloseEnd={() => setIsOpen(true)}
+            />
             {/* shopping cart */}
             <Modal visible={modalOpen} animationType="fade">
                 <View style={styles.modalContainer}>
@@ -137,25 +204,31 @@ export default function FavScreen() {
                         keyExtractor={BuyListing => BuyListing.id.toString()}
                         renderItem={({ item }) =>
                             <MyCart quantity={item.quantity} unCode={item.code} title={item.title} subTitle={"$" + item.subTitle}
-                                image={item.image} prePrice={"$" + item.oldPrice} onPress={() => console.log("deleted")} />
+                                image={item.image} prePrice={"$" + item.oldPrice} onPress={() => onPress={toggleBottomSheet}} />
                         }
                     />
                 </View>
             </Modal>
 
             {/* FavScreen */}
-            <Text style={styles.text}> Favourites</Text>
-            <TouchableOpacity onPress={() => setModalOpen(true)} style={{ flexDirection: 'row-reverse', top: 20, paddingLeft: 40 }}>
-                <AntDesign name="shoppingcart" size={28} color={colours.black} />
-            </TouchableOpacity>
-            <FlatList vertical showsVerticalScrollIndicator={false} style={styles.flatList}
-                data={Listing}
-                keyExtractor={listing => listing.id.toString()}
-                renderItem={({ item }) =>
-                    <CardRes Animate={true} noAnimate={false} showFavIcon={true} addStyle={styles.addToCartBtn} style={styles.card} title={item.title} subTitle={"$" + item.subTitle} image={item.image} showCount={false}
-                        onPress={() => navigation.navigate("Favourites", { screen: "Details", params: { ...item } })}
-                    />}
-            />
+            <Animated.View style={{
+                opacity:
+                    Animated.add(0.13, Animated.multiply(new Animated.Value(isOpen ? 1 : 0), 1.0))
+            }}>
+                <Text style={styles.text}>Favourites</Text>
+                {/* onPress={() => setModalOpen(true)} */}
+                <TouchableOpacity onPress={toggleBottomSheet} style={{ flexDirection: 'row-reverse', top: 20, paddingLeft: 40 }}>
+                    <AntDesign name="shoppingcart" size={28} color={colours.black} />
+                </TouchableOpacity>
+                <FlatList vertical showsVerticalScrollIndicator={false} style={styles.flatList}
+                    data={Listing}
+                    keyExtractor={listing => listing.id.toString()}
+                    renderItem={({ item }) =>
+                        <CardRes Animate={true} noAnimate={false} showFavIcon={true} addStyle={styles.addToCartBtn} style={styles.card} title={item.title} subTitle={"$" + item.subTitle} image={item.image} showCount={false}
+                            onPress={() => navigation.navigate("Favourites", { screen: "Details", params: { ...item } })}
+                        />}
+                />
+            </Animated.View>
         </View>
     )
 }
@@ -200,5 +273,59 @@ const styles = StyleSheet.create({
     modalContainer: {
         flex: 1,
         backgroundColor: colours.beige,
-    }
+    },
+    modalInner: {
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: colours.beige
+        // top: 50,
+    },
+    panelHeader: {
+        alignItems: 'center',
+    },
+    panelHandel: {
+        width: 40,
+        height: 8,
+        borderRadius: 4,
+        backgroundColor: colours.green,
+        marginBottom: 10,
+    },
+    headModal: {
+        backgroundColor: colours.beige,
+        shadowColor: '#333333',
+        shadowOffset: { width: -1, height: -3 },
+        shadowRadius: 2,
+        shadowOpacity: 0.4,
+        paddingTop: 20,
+        borderTopLeftRadius: 20,
+        borderTopRightRadius: 20,
+    },
+    containerRate: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    titleRate: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        marginBottom: 20,
+    },
+    ratingContainer: {
+        flexDirection: 'row',
+    },
+    buttonRate: {
+        backgroundColor: colours.green,
+        borderRadius: 40,
+        height: 30,
+        width: 100,
+        top: 20,
+    },
+    buttonText: {
+        color: "white",
+        textAlign: 'center',
+        top: 5.5,
+        fontSize: 15,
+        fontWeight: 'bold'
+    },
 })

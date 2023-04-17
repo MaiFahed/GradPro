@@ -7,7 +7,7 @@ export default function ApplePayButton({onPress}) {
     return (
       <View>
         <Button
-          title='Pay'
+          title=' Add to Cart'
           type="solid"
           onPress={onPress}
           buttonStyle={{
@@ -18,7 +18,7 @@ export default function ApplePayButton({onPress}) {
           }}
           icon={{
             type: 'font-awesome',
-            name: 'apple',
+            name: 'shopping-bag',
             color: colours.white,
             size: 24,
           }}
