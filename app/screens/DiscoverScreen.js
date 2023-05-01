@@ -5,6 +5,7 @@ import SearchBar from '../Componants/SearchBar';
 import CardRes from '../Componants/CardRes';
 import colours from '../Componants/colours';
 import MyCart from '../Componants/MyCart';
+import SearchScreen from './SearchScreen';
 // navs
 import { useNavigation } from '@react-navigation/native';
 
@@ -165,7 +166,7 @@ export default function DiscoverScreen() {
         <View style={styles.outer}>
             <ScrollView>
                 <View style={{ alignSelf: 'center', position: 'absolute', width: '95%', top: 63 }}>
-                    <SearchBar />
+                    <SearchBar onPress={()=> navigation.navigate("Search")}/>
                 </View>
                 <View style={{ width: '100%', top: 120, backgroundColor: colours.beige }}>
                     <Text style={styles.text}> Recomended for you</Text>
