@@ -6,6 +6,7 @@ import MyCart from '../Componants/MyCart';
 import BottomSheet from 'reanimated-bottom-sheet';
 import Animated from 'react-native-reanimated';
 import GetStart from '../Componants/GetStart';
+import { Cart } from './Cart';
 // navs
 import { useNavigation } from '@react-navigation/native';
 
@@ -217,7 +218,7 @@ export default function FavScreen() {
             }}>
                 <Text style={styles.text}>Favourites</Text>
                 {/* onPress={() => setModalOpen(true)} */}
-                <TouchableOpacity onPress={toggleBottomSheet} style={{ flexDirection: 'row-reverse', top: 20, paddingLeft: 40 }}>
+                <TouchableOpacity onPress={()=> navigation.navigate("Cart")} style={{ flexDirection: 'row-reverse', top: 20, paddingLeft: 40 }}>
                     <AntDesign name="shoppingcart" size={28} color={colours.black} />
                 </TouchableOpacity>
                 <FlatList vertical showsVerticalScrollIndicator={false} style={styles.flatList}

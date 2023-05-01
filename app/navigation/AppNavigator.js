@@ -13,6 +13,7 @@ import DiscoverScreen from '../screens/DiscoverScreen';
 import DetailsScreen from '../screens/DetailsScreen';
 import FeedNavigator from './FeedNavigator';
 import FavScreen from '../screens/FavScreen';
+import Cart from '../screens/Cart';
 //icons
 import { MaterialIcons } from '@expo/vector-icons';
 import { FontAwesome5 } from '@expo/vector-icons';
@@ -54,6 +55,7 @@ const FavStack = () => (
   <StackFav.Navigator screenOptions={{headerShown:false}}>
     <StackFav.Screen name='FavScreen' component={FavScreen} />
     <StackFav.Screen name='Details' component={DetailsScreen} />
+    <StackFav.Screen name='Cart' component={Cart} />
   </StackFav.Navigator> 
 );
 
