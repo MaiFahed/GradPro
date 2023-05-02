@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, FlatList } from 'react-native'
+import { StyleSheet, Text, TextInput, View, FlatList, TouchableOpacity } from 'react-native'
 import React, { useState } from 'react'
 import colours from '../Componants/colours'
 import SearchBar from '../Componants/SearchBar'
@@ -6,6 +6,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Ionicons } from '@expo/vector-icons';
 import CardRes from '../Componants/CardRes';
+import { EvilIcons } from '@expo/vector-icons';
 // navs
 import { useNavigation } from '@react-navigation/native';
 
@@ -66,15 +67,30 @@ const Listing = [
 export default function Search() {
   const navigation = useNavigation();
   const [showList, setShowList] = useState(false);
+  const [text, setText] = useState('');
 
   const handleButtonClick = () => {
     setShowList(!showList);
   };
 
+  const handleTextChange = (inputText) => {
+    setText(inputText);
+  };
+
   return (
     <View style={styles.outer}>
       <View style={{ alignSelf: 'center', position: 'absolute', width: '95%', top: 63 }}>
-        <SearchBar onPress={handleButtonClick} />
+        {/* <SearchBar onPress={handleButtonClick} /> */}
+        <View style={styles.container}>
+          <TouchableOpacity onPress={handleButtonClick} style={styles.logoStyle}>
+            <EvilIcons name="search" size={28} color="grey" style={{ position: 'absolute', top: 12, paddingLeft: 10 }} />
+          </TouchableOpacity>
+          <TextInput clearButtonMode='always'
+            value={text}
+            onChangeText={handleTextChange}
+            placeholder='Search'
+            style={styles.searchInput} />
+        </View>
       </View>
 
       <View style={styles.inner}>
@@ -146,5 +162,34 @@ const styles = StyleSheet.create({
     top: 25,
     paddingLeft: 2,
     marginLeft: 320,
+  },
+  container: {
+    marginLeft: 10,
+    paddingTop: 15,
+    paddingLeft: 10,
+    width: '80%',
+    height: 45,
+    backgroundColor: 'white',
+    borderTopLeftRadius: 10,
+    borderBottomLeftRadius: 10,
+    borderWidth: "1",
+    borderColor: 'lightgray',
+    borderRightColor: "white",
+
+  },
+  searchInput: {
+    fontSize: 16,
+  },
+  logoStyle: {
+    backgroundColor: "white",
+    marginLeft: 313,
+    position: 'absolute',
+    top: -1,
+    width: 50,
+    height: 45,
+    borderTopRightRadius: 10,
+    borderBottomRightRadius: 10,
+    borderWidth: "1",
+    borderColor: 'lightgray',
   },
 })
