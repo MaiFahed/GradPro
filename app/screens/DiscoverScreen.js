@@ -143,23 +143,6 @@ const ListingC = [
     },
 ];
 
-function Searching() {
-    return (
-        <>
-            <FlatList vertical showsVerticalScrollIndicator={false} style={styles.flatList}
-                data={Listing}
-                keyExtractor={listing => listing.id.toString()}
-                renderItem={({ item }) =>
-                    <CardRes Animate={true} noAnimate={false} showFavIcon={true}
-                        addStyle={styles.addToCartBtn} style={styles.card}
-                        title={item.title} subTitle={"$" + item.subTitle}
-                        image={item.image} showCount={false}
-                    />}
-            />
-        </>
-    );
-}
-
 export default function DiscoverScreen() {
     const navigation = useNavigation();
     return (

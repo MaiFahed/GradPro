@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, FlatList } from 'react-native'
-import React from 'react'
+import React, { useState } from 'react'
 import colours from '../Componants/colours'
 import SearchBar from '../Componants/SearchBar'
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -11,56 +11,71 @@ import { useNavigation } from '@react-navigation/native';
 
 const Listing = [
   {
-      id: 1,
-      title: 'KFC',
-      subTitle: 100,
-      image: require('../assets/checken.png'),
-      count: 10,
-      rate: 5,
-      collect: '1:30-4:00',
-      oldPrice:5.5,
+    id: 1,
+    title: 'KFC',
+    subTitle: 100,
+    image: require('../assets/checken.png'),
+    count: 10,
+    rate: 5,
+    collect: '1:30-4:00',
+    oldPrice: 5.5,
   },
   {
-      id: 2,
-      title: "90's Burger",
-      subTitle: 200,
-      image: require('../assets/burger.jpg'),
-      count: 15,
-      rate: 4,
-      collect: '2:00-5:00',
-      oldPrice:95,
+    id: 2,
+    title: "90's Burger",
+    subTitle: 200,
+    image: require('../assets/burger.jpg'),
+    count: 15,
+    rate: 4,
+    collect: '2:00-5:00',
+    oldPrice: 95,
   },
   {
-      id: 3,
-      title: 'Shawerman',
-      subTitle: 200,
-      image: require('../assets/shawerma.avif'),
-      count: 9,
-      rate: 3,
-      collect: '3:30-4:00',
-      oldPrice:15,
+    id: 3,
+    title: 'Shawerman',
+    subTitle: 200,
+    image: require('../assets/shawerma.avif'),
+    count: 9,
+    rate: 3,
+    collect: '3:30-4:00',
+    oldPrice: 15,
   },
   {
-      id: 4,
-      title: 'Ward Restaurant',
-      subTitle: 200,
-      image: require('../assets/musakhan.png'),
-      count: 7,
-      rate: 2,
-      collect: '4:00-5:00',
-      oldPrice:25,
+    id: 4,
+    title: 'Ward Restaurant',
+    subTitle: 200,
+    image: require('../assets/musakhan.png'),
+    count: 7,
+    rate: 2,
+    collect: '4:00-5:00',
+    oldPrice: 25,
+  },
+  {
+    id: 5,
+    title: 'Ward Restaurant',
+    subTitle: 200,
+    image: require('../assets/musakhan.png'),
+    count: 7,
+    rate: 2,
+    collect: '4:00-5:00',
+    oldPrice: 25,
   },
 ];
 
+
 export default function Search() {
   const navigation = useNavigation();
+  const [showList, setShowList] = useState(false);
+
+  const handleButtonClick = () => {
+    setShowList(!showList);
+  };
+
   return (
     <View style={styles.outer}>
       <View style={{ alignSelf: 'center', position: 'absolute', width: '95%', top: 63 }}>
-        <SearchBar onPress={() => console.log("searching")} />
+        <SearchBar onPress={handleButtonClick} />
       </View>
-
-      {/* <Text style={{ fontWeight: 'bold', fontSize: 20, position:'absolute', top:150 }}>Category</Text> */}
 
       <View style={styles.inner}>
         <View style={styles.square}>
@@ -79,17 +94,15 @@ export default function Search() {
         </View>
       </View>
 
-      {/* <View style={{ width: '100%', top: 100, backgroundColor: colours.beige }}> */}
-        <FlatList
-          data={Listing}
-          keyExtractor={listing => listing.id.toString()}
-          renderItem={({ item }) =>
-            <CardRes Animate={false} noAnimate={true} showFavIcon={false} addStyle={styles.addToCartBtn} style={styles.card} title={item.title} subTitle={"$" + item.subTitle} image={item.image} showCount={false}
-              onPress={() => navigation.navigate("DiscoverFeed", { screen: "Details", params: { ...item } })}
-            />
-          }
-        />
-      {/* </View> */}
+      {showList && (<FlatList style={{ top: 190, margin: 7 }}
+        data={Listing}
+        keyExtractor={listing => listing.id.toString()}
+        renderItem={({ item }) =>
+          <CardRes Animate={false} noAnimate={true} showFavIcon={false} addStyle={styles.addToCartBtn} style={styles.card} title={item.title} subTitle={"$" + item.subTitle} image={item.image} showCount={false}
+            onPress={() => navigation.navigate("DiscoverFeed", { screen: "Details", params: { ...item } })}
+          />
+        }
+      />)}
 
     </View>
   )
@@ -101,23 +114,20 @@ const styles = StyleSheet.create({
     backgroundColor: colours.beige,
   },
   inner: {
-    paddingTop: 150,
-    paddingLeft: 20,
-    paddingRight: 20,
+    position: 'absolute',
+    top: 110,
     flexDirection: 'row',
-    justifyContent: 'center',
-    alignContent: 'center',
   },
   square: {
-    width: 65,
-    height: 65,
+    width: 100,
+    height: 45,
     borderRadius: 5,
     backgroundColor: 'white',
     borderWidth: 1,
     borderColor: colours.green,
     justifyContent: 'center',
     alignItems: 'center',
-    marginRight: 20,
+    margin: 17,
   },
   card: {
     overflow: "hidden",
@@ -125,9 +135,9 @@ const styles = StyleSheet.create({
     backgroundColor: colours.white,
     marginBottom: 20,
     marginLeft: 10,
-    width: 350,
-},
-addToCartBtn: {
+    width: 380,
+  },
+  addToCartBtn: {
     height: 30,
     width: 30,
     borderRadius: 20,
@@ -135,6 +145,6 @@ addToCartBtn: {
     position: 'absolute',
     top: 25,
     paddingLeft: 2,
-    marginLeft: 150,
-},
+    marginLeft: 320,
+  },
 })
