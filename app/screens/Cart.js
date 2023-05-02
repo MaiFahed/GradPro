@@ -13,19 +13,6 @@ import { AntDesign } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
 import { Button } from 'react-native-elements/dist/buttons/Button';
 
-function generateUniqueCode() {
-    let code = '';
-    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'; // The possible characters to be used in the code
-    const codeLength = 4; // The length of the code
-
-    for (let i = 0; i < codeLength; i++) {
-        const randomIndex = Math.floor(Math.random() * characters.length); // Generate a random index for the characters string
-        code += characters.charAt(randomIndex); // Append a random character to the code
-    }
-
-    return code;
-}
-const myUniqueCode = generateUniqueCode();
 
 const BuyListing = [
     {
@@ -36,8 +23,8 @@ const BuyListing = [
         image: require('../assets/popeyes.webp'),
         count: 8,
         quantity: 5,
-        code: myUniqueCode,
         rate: 5,
+        totalPrice: 40,
         collect: '7:00-8:00'
     },
     {
@@ -48,7 +35,7 @@ const BuyListing = [
         image: require('../assets/freshFroyojpg.jpg'),
         count: 6,
         quantity: 1,
-        code: myUniqueCode,
+        totalPrice: 40,
         rate: 5,
         collect: '7:00-8:00'
     },
@@ -60,7 +47,7 @@ const BuyListing = [
         image: require('../assets/juice.jpg'),
         count: 4,
         quantity: 4,
-        code: myUniqueCode,
+        totalPrice: 40,
         rate: 5,
         collect: '7:00-8:00'
     },
@@ -72,7 +59,7 @@ const BuyListing = [
         image: require('../assets/cake.jpg'),
         count: 1,
         quantity: 2,
-        code: myUniqueCode,
+        totalPrice: 40,
         rate: 5,
         collect: '7:00-8:00'
     },
@@ -84,16 +71,13 @@ const windowHeight = Dimensions.get('window').height;
 export default function Cart() {
     return (
         <View style={styles.modalContainer}>
-            {/* <TouchableOpacity onPress={() => setModalOpen(false)} style={{ flexDirection: 'row-reverse', top: 50, paddingLeft: 30 }}>
-                <AntDesign name="close" size={35} color={colours.black} />
-            </TouchableOpacity> */}
-
             <FlatList vertical showsVerticalScrollIndicator={false} style={styles.flatList}
                 data={BuyListing}
                 keyExtractor={BuyListing => BuyListing.id.toString()}
                 renderItem={({ item }) =>
-                    <MyCart quantity={item.quantity} unCode={item.code} title={item.title} subTitle={"$" + item.subTitle}
-                        image={item.image} prePrice={"$" + item.oldPrice} onPress={() =>console.log("hi")} />
+                    <MyCart quantity={item.quantity} title={item.title} subTitle={"$" + item.subTitle}
+                        image={item.image} prePrice={"$" + item.oldPrice} totalPrice={"$" +item.totalPrice}
+                        onPress={() => console.log("hi")} />
                 }
             />
         </View>
