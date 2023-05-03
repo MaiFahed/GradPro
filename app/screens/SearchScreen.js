@@ -51,16 +51,6 @@ const Listing = [
     collect: '4:00-5:00',
     oldPrice: 25,
   },
-  {
-    id: 5,
-    title: 'Ward Restaurant',
-    subTitle: 200,
-    image: require('../assets/musakhan.png'),
-    count: 7,
-    rate: 2,
-    collect: '4:00-5:00',
-    oldPrice: 25,
-  },
 ];
 
 
@@ -77,6 +67,20 @@ export default function Search() {
     setText(inputText);
   };
 
+  const [displayText, setDisplayText] = useState('Category');
+
+  const handleFoodButton = () => {
+    setDisplayText('Food');
+  };
+
+  const handleLocationButton = () => {
+    setDisplayText('Location');
+  };
+
+  const handleRestaurantButton = () => {
+    setDisplayText('Restaurant');
+  };
+
   return (
     <View style={styles.outer}>
       <View style={{ alignSelf: 'center', position: 'absolute', width: '95%', top: 63 }}>
@@ -91,26 +95,31 @@ export default function Search() {
             placeholder='Search'
             style={styles.searchInput} />
         </View>
+        <View style={{ paddingLeft: 15, paddingTop:10 }}>
+          <Text style={{fontWeight:'bold', fontSize:20}}>{displayText} :</Text>
+        </View>
       </View>
+
+
 
       <View style={styles.inner}>
-        <View style={styles.square}>
+        <TouchableOpacity onPress={handleFoodButton} style={styles.square}>
           <Ionicons name="fast-food" size={24} color={colours.green} />
           <Text style={{ fontSize: 11, fontWeight: '600' }}>Food</Text>
-        </View>
+        </TouchableOpacity>
 
-        <View style={styles.square}>
+        <TouchableOpacity onPress={handleLocationButton} style={styles.square}>
           <MaterialIcons name="not-listed-location" size={24} color={colours.green} />
           <Text style={{ fontSize: 11, fontWeight: '600' }}>Location</Text>
-        </View>
+        </TouchableOpacity>
 
-        <View style={styles.square}>
+        <TouchableOpacity onPress={handleRestaurantButton} style={styles.square}>
           <MaterialIcons name="restaurant" size={24} color={colours.green} />
           <Text style={{ fontSize: 10, fontWeight: '600' }}>Restaurant</Text>
-        </View>
+        </TouchableOpacity>
       </View>
 
-      {showList && (<FlatList style={{ top: 190, margin: 7 }}
+      {showList && (<FlatList style={{ top: 220, margin: 7 }}
         data={Listing}
         keyExtractor={listing => listing.id.toString()}
         renderItem={({ item }) =>
@@ -131,7 +140,7 @@ const styles = StyleSheet.create({
   },
   inner: {
     position: 'absolute',
-    top: 110,
+    top: 140,
     flexDirection: 'row',
   },
   square: {
