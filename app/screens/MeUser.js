@@ -19,7 +19,7 @@ export default function MeUser({}) {
     <View style={styles.outer}>
       <View style={styles.moneySaved}>
         <Text style={{paddingLeft:'33%',paddingTop:20, fontSize:20, fontWeight:"600"}}>Money Saved</Text>
-        <Text style={{paddingLeft:'45%',paddingTop:10, fontSize:20,color:colours.green, fontWeight:"600"}}>$40</Text>
+        <Text style={{paddingLeft:'45%',paddingTop:10, fontSize:20,color:colours.green, fontWeight:"600"}}>₪ 41</Text>
       </View>
 
       <View style={{alignSelf:'center',position:'absolute',width:'100%', top:210}}>

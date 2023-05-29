@@ -18,24 +18,24 @@ const BuyListing = [
     {
         id: 1,
         title: 'Popeyes',
-        subTitle: 20,
-        oldPrice: 10,
+        subTitle: 27,
+        oldPrice: 16,
         image: require('../assets/popeyes.webp'),
         count: 8,
         quantity: 5,
         rate: 5,
-        totalPrice: 40,
+        totalPrice: 80,
         collect: '7:00-8:00'
     },
     {
         id: 2,
         title: 'Fresh Froyo',
-        subTitle: 15,
-        oldPrice: 35,
+        subTitle: 12,
+        oldPrice: 6,
         image: require('../assets/freshFroyojpg.jpg'),
         count: 6,
         quantity: 1,
-        totalPrice: 40,
+        totalPrice: 6,
         rate: 5,
         collect: '7:00-8:00'
     },
@@ -43,23 +43,23 @@ const BuyListing = [
         id: 3,
         title: 'Mandalina',
         subTitle: 25,
-        oldPrice: 40,
+        oldPrice: 14,
         image: require('../assets/juice.jpg'),
         count: 4,
         quantity: 4,
-        totalPrice: 40,
+        totalPrice: 56,
         rate: 5,
         collect: '7:00-8:00'
     },
     {
         id: 4,
         title: 'Lebanon Gateau',
-        subTitle: 10,
-        oldPrice: 30,
+        subTitle: 30,
+        oldPrice: 17,
         image: require('../assets/cake.jpg'),
         count: 1,
         quantity: 2,
-        totalPrice: 40,
+        totalPrice: 34,
         rate: 5,
         collect: '7:00-8:00'
     },
@@ -75,8 +75,8 @@ export default function Cart() {
                 data={BuyListing}
                 keyExtractor={BuyListing => BuyListing.id.toString()}
                 renderItem={({ item }) =>
-                    <MyCart quantity={item.quantity} title={item.title} subTitle={"$" + item.subTitle}
-                        image={item.image} prePrice={"$" + item.oldPrice} totalPrice={"$" +item.totalPrice}
+                    <MyCart  quantity={item.quantity} title={item.title} subTitle={"₪" + item.subTitle}
+                        image={item.image} prePrice={"₪" + item.oldPrice} totalPrice={"₪" +item.totalPrice}
                         onPress={() => console.log("hi")} />
                 }
             />

@@ -23,9 +23,9 @@ export default function App() {
     // <DetailsScreen/>
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
-        {/* <Stack.Screen name='SplashScreen' component={SplashScreen} />
+        <Stack.Screen name='SplashScreen' component={SplashScreen} />
         <Stack.Screen name='SignIn' component={SignIn} />
-        <Stack.Screen name='SignUp' component={SignUp} /> */}
+        <Stack.Screen name='SignUp' component={SignUp} />
         <Stack.Screen name='AppNavigator' component={AppNavigator} />
       </Stack.Navigator>
     </NavigationContainer>

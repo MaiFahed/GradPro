@@ -1,5 +1,7 @@
 import { Button, StyleSheet, Text, View, Image, Dimensions, TouchableOpacity, Alert } from 'react-native';
-import React, { useRef, useState, useCallback } from 'react';
+import React, { useRef, useState, useCallback, } from 'react';
+// import DropDownPicker from 'react-native-dropdown-picker';
+import RNPickerSelect from 'react-native-picker-select';
 import colours from '../Componants/colours';
 import BottomSheet from 'reanimated-bottom-sheet';
 import Animated from 'react-native-reanimated';
@@ -25,10 +27,17 @@ export default function DetailsScreen({ route }) {
     const ingRef = React.useRef(null);
     const ingFall = new Animated.Value(1);
 
+    const donRef = React.useRef(null);
+    const donFall = new Animated.Value(1);
+
+    const [selectedValue, setSelectedValue] = useState('');
     const [isOpen, setIsOpen] = useState(true);
     const [ingisOpen, ingsetIsOpen] = useState(true);
+    const [donisOpen, donsetIsOpen] = useState(true);
     const [quantity, setQuantity] = useState(1);
+    const [donquantity, donsetQuantity] = useState(1);
     const [price, setPrice] = useState(0);
+    const [donprice, donsetPrice] = useState(0);
     const [isFavorite, setIsFavorite] = useState(false);
 
     const updatePrice = (newQuantity) => {
@@ -48,7 +57,24 @@ export default function DetailsScreen({ route }) {
             updatePrice(quantity - 1);
         }
     };
+    //donate
+    const donupdatePrice = (donnewQuantity) => {
+        donsetPrice(donnewQuantity * listing.subTitle);
+    }
 
+    const donincreaseQuantity = () => {
+        if (donquantity < listing.count) {
+            donsetQuantity(donquantity + 1);
+            donupdatePrice(donquantity + 1);
+        }
+    };
+
+    const dondecreaseQuantity = () => {
+        if (donquantity > 1) {
+            setQuantity(donquantity - 1);
+            updatePrice(donquantity - 1);
+        }
+    };
     const toggleBottomSheet = () => {
         setIsOpen(!isOpen);
         modalRef.current?.snapTo(!isOpen ? 1 : 0);
@@ -57,6 +83,11 @@ export default function DetailsScreen({ route }) {
     const ingtoggleBottomSheet = () => {
         ingsetIsOpen(!ingisOpen);
         ingRef.current?.snapTo(!ingisOpen ? 1 : 0);
+    };
+
+    const dontoggleBottomSheet = () => {
+        donsetIsOpen(!donisOpen);
+        donRef.current?.snapTo(!donisOpen ? 1 : 0);
     };
 
     const handleFav = () => {
@@ -95,11 +126,68 @@ export default function DetailsScreen({ route }) {
             <Text style={{ color: colours.grey, margin: 27 }}>By reserving this meal you agree to Go4Food's terms</Text>
 
             <View style={styles.seperator} />
-            <Text style={{ fontWeight: '600' }}>Total                                                                         ${price}</Text>
+            <Text style={{ fontWeight: '600' }}>Total                                                                         ₪{price}</Text>
             <View style={styles.seperator} />
 
             <View style={{ margin: 20 }}>
-                <ApplePayButton onPress={() => console.log(quantity)} />
+                <ApplePayButton title={"Pay"} onPress={() => console.log(quantity)} />
+            </View>
+
+            <TouchableOpacity onPress={() => console.log("Other payment methods")}>
+                <Text style={{ color: colours.green, fontWeight: 'bold' }}>Other payment methods</Text>
+            </TouchableOpacity>
+
+        </View>
+
+    );
+
+    const donrenderInner = () => (
+        <View style={styles.modalInner}>
+            <View>
+                <Text style={{ fontWeight: 'bold', fontSize: 16.5 }}>
+                    {listing.title} is offering a new box
+                </Text>
+            </View>
+
+            <View style={styles.hurryUpTxt}>
+                <EvilIcons name="clock" size={24} color={colours.grey} />
+                <Text style={{ color: colours.grey }}> Grab it before it's too late!</Text>
+            </View>
+
+            <View style={styles.seperator} />
+
+            <Text style={{ fontWeight: 'bold', fontSize: 16.5, margin: 10 }}>Select quantity</Text>
+
+            <View style={styles.donquantityContainer}>
+                <TouchableOpacity onPress={dondecreaseQuantity}>
+                    <AntDesign style={donquantity === 1 ? styles.disabledQuantityButton : styles.quantityButton}
+                        name="minuscircle" size={35} />
+                </TouchableOpacity>
+                <Text style={styles.quantity}>{donquantity}</Text>
+                <TouchableOpacity onPress={donincreaseQuantity}>
+                    <AntDesign style={donquantity === listing.count ? styles.disabledQuantityButton : styles.quantityButton}
+                        name="pluscircle" size={35} color={colours.green} />
+                </TouchableOpacity>
+            </View>
+
+            {/* <Text style={{ color: colours.grey, margin: 27 }}>By reserving this meal you agree to Go4Food's terms</Text> */}
+
+            <View style={styles.seperator} />
+            <Text style={{ fontWeight: '600' }}>Total                                                                         ₪{donprice}</Text>
+            <View style={styles.seperator} />
+
+            <View style={styles.picker}>
+                <RNPickerSelect
+                    onValueChange={(itemValue) => setSelectedValue(itemValue)}
+                    items={[
+                        { label: 'Option 1', value: 'option1' },
+                        { label: 'Option 2', value: 'option2' },
+                        { label: 'Option 3', value: 'option3' },
+                    ]}
+                />
+            </View>
+            <View style={{ margin: 20 }}>
+                <ApplePayButton title={"Donate"} onPress={() => console.log(quantity)} />
             </View>
 
             <TouchableOpacity onPress={() => console.log("Other payment methods")}>
@@ -158,92 +246,109 @@ export default function DetailsScreen({ route }) {
                 enabledGestureInteraction={true}
                 onCloseEnd={() => ingsetIsOpen(true)}
             />
+            <BottomSheet
+                ref={donRef}
+                snapPoints={[450, 0]}
+                renderContent={donrenderInner}
+                renderHeader={renderHead}
+                initialSnap={1}
+                callbackNode={donFall}
+                animateOnMount={false}
+                enabledGestureInteraction={true}
+                onCloseEnd={() => donsetIsOpen(true)}
+            />
+
             <Animated.View style={{
                 opacity:
-                    Animated.add(0.13, Animated.multiply(new Animated.Value(ingisOpen ? 1 : 0), 1.0))
+                    Animated.add(0.13, Animated.multiply(new Animated.Value(donisOpen ? 1 : 0), 1.0))
             }}>
                 <Animated.View style={{
                     opacity:
                         Animated.add(0.13, Animated.multiply(new Animated.Value(isOpen ? 1 : 0), 1.0))
                 }}>
-                    <View style={styles.detailsContainer}>
-                        <Image source={listing.image} style={styles.img} />
+                    <Animated.View style={{
+                        opacity:
+                            Animated.add(0.13, Animated.multiply(new Animated.Value(ingisOpen ? 1 : 0), 1.0))
+                    }}>
+                        <View style={styles.detailsContainer}>
+                            <Image source={listing.image} style={styles.img} />
 
-                        <View style={styles.footer}>
-                            <Text style={styles.title}>{listing.title}</Text>
+                            <View style={styles.footer}>
+                                <Text style={styles.title}>{listing.title}</Text>
 
-                            <View style={styles.favIcon}>
-                                <FavIcon name={isFavorite ? "heart" : "heart-o"}
-                                    color={isFavorite ? colours.red : colours.black}
-                                    onPress={handleFav} />
-                            </View>
+                                <View style={styles.favIcon}>
+                                    <FavIcon name={isFavorite ? "heart" : "heart-o"}
+                                        color={isFavorite ? colours.red : colours.black}
+                                        onPress={handleFav} />
+                                </View>
 
-                            {/* <View style={{ flexDirection: 'row', alignItems: 'center', top: 10 }}>
+                                {/* <View style={{ flexDirection: 'row', alignItems: 'center', top: 10 }}>
                                 <AntDesign name="inbox" size={24} color={colours.darkgreen} />
                                 <Text style={{ color: colours.black }}> Magic Box Mini</Text>
                             </View>*/}
 
-                            <View style={{ flexDirection: 'row', alignItems: 'flex-end', top: 5 }}>
-                                <MaterialCommunityIcons name="hand-coin-outline" size={24} color={colours.darkgreen} />
-                                <Text style={{ textDecorationLine: 'line-through', color: colours.black, fontSize: 15, textAlign: 'right' }}>
-                                    {listing.oldPrice}$ 
+                                <View style={{ flexDirection: 'row', alignItems: 'flex-end', top: 5 }}>
+                                    <MaterialCommunityIcons name="hand-coin-outline" size={24} color={colours.darkgreen} />
+                                    <Text style={{ textDecorationLine: 'line-through', color: colours.black, fontSize: 15, textAlign: 'right' }}>
+                                        ₪{listing.oldPrice}
+                                    </Text>
+                                    <Text style={styles.subTitle}>   ₪{listing.subTitle}</Text>
+                                </View>
+
+                                <View style={{ flexDirection: 'row', alignItems: 'center', top: 13 }}>
+                                    <Feather name="clock" size={20} color={colours.darkgreen} />
+                                    <Text style={{ color: colours.black }}> Collect: {listing.collect}</Text>
+                                </View>
+
+                                <View style={styles.fullSeperator} />
+
+                                <Text style={{ top: 45, fontWeight: 'bold', fontSize: 12 }}>WHAT COULD YOU GET?</Text>
+
+                                <Text numberOfLines={2} style={{ top: 53, }}>In your Magic box you can find fried chicken,
+                                    fries and many other surprise products. </Text>
+
+                                <TouchableOpacity style={styles.ingredients} onPress={ingtoggleBottomSheet} >
+                                    <Text style={styles.innerIng}>Ingredients & allergens</Text>
+                                </TouchableOpacity>
+
+                                <Text style={{ top: 90, paddingLeft: windowWidth / 4.5, fontWeight: 'bold', fontSize: 12 }}>
+                                    WHAT OTHER PEOPLE ARE SAYING
                                 </Text>
-                                <Text style={styles.subTitle}>   {listing.subTitle}$</Text>
+
+                                <Text style={{ top: 100, paddingLeft: windowWidth / 2.8, fontWeight: 'bold', }}>
+                                    <AntDesign name="staro" size={30} color={colours.darkgreen} />
+                                    <Text style={{ color: colours.black, fontSize: 28 }}> {listing.rate} / 5</Text>
+                                </Text>
+
+                                <View style={[styles.seperator, { backgroundColor: 'lightgray', top: windowHeight / 8.8, width: '60%', marginLeft: 80 }]} />
+
+                                <View style={{ flexDirection: 'row', alignItems: 'center', paddingLeft: windowWidth / 3, top: 105 }}>
+                                    <FontAwesome5 name="smile-wink" size={24} color={colours.darkgreen} />
+                                    <Text style={{ color: colours.black }}>    Friendly Staff</Text>
+                                </View>
+
+                                <View style={{ flexDirection: 'row', alignItems: 'center', paddingLeft: windowWidth / 3, top: 109 }}>
+                                    <FontAwesome5 name="coins" size={24} color={colours.darkgreen} />
+                                    <Text style={{ color: colours.black }}>    Great Value</Text>
+                                </View>
+
+                                <View style={{ flexDirection: 'row', alignItems: 'center', paddingLeft: windowWidth / 3.1, top: 110 }}>
+                                    <MaterialCommunityIcons name="clock-fast" size={30} color={colours.darkgreen} />
+                                    <Text style={{ color: colours.black }}>    Quick collection</Text>
+                                </View>
+
+                                <View style={{ top: 130 }}>
+                                    <RegButtons title={"Reserve"} onPress={toggleBottomSheet} />
+                                </View>
+
+                                <View style={{ top: 140 }}>
+                                    <RegButtons title={"Donate"} onPress={dontoggleBottomSheet} />
+                                </View>
+
                             </View>
-
-                            <View style={{ flexDirection: 'row', alignItems: 'center', top: 13 }}>
-                                <Feather name="clock" size={20} color={colours.darkgreen} />
-                                <Text style={{ color: colours.black }}> Collect: {listing.collect}</Text>
-                            </View>
-
-                            <View style={styles.fullSeperator} />
-
-                            <Text style={{ top: 45, fontWeight: 'bold', fontSize: 12 }}>WHAT COULD YOU GET?</Text>
-
-                            <Text numberOfLines={2} style={{ top: 53, }}>In your Magic box you can find fried chicken,
-                                fries and many other surprise products. </Text>
-
-                            <TouchableOpacity style={styles.ingredients} onPress={ingtoggleBottomSheet} >
-                                <Text style={styles.innerIng}>Ingredients & allergens</Text>
-                            </TouchableOpacity>
-
-                            <Text style={{ top: 90, paddingLeft: windowWidth / 4.5, fontWeight: 'bold', fontSize: 12 }}>
-                                WHAT OTHER PEOPLE ARE SAYING
-                            </Text>
-
-                            <Text style={{ top: 100, paddingLeft: windowWidth / 2.8, fontWeight: 'bold', }}>
-                                <AntDesign name="staro" size={30} color={colours.darkgreen} />
-                                <Text style={{ color: colours.black, fontSize: 28 }}> {listing.rate} / 5</Text>
-                            </Text>
-
-                            <View style={[styles.seperator, { backgroundColor: 'lightgray', top: windowHeight / 8.8, width: '60%', marginLeft: 80 }]} />
-
-                            <View style={{ flexDirection: 'row', alignItems: 'center', paddingLeft: windowWidth / 3, top: 105 }}>
-                                <FontAwesome5 name="smile-wink" size={24} color={colours.darkgreen} />
-                                <Text style={{ color: colours.black }}>    Friendly Staff</Text>
-                            </View>
-
-                            <View style={{ flexDirection: 'row', alignItems: 'center', paddingLeft: windowWidth / 3, top: 109 }}>
-                                <FontAwesome5 name="coins" size={24} color={colours.darkgreen} />
-                                <Text style={{ color: colours.black }}>    Great Value</Text>
-                            </View>
-
-                            <View style={{ flexDirection: 'row', alignItems: 'center', paddingLeft: windowWidth / 3.1, top: 110 }}>
-                                <MaterialCommunityIcons name="clock-fast" size={30} color={colours.darkgreen} />
-                                <Text style={{ color: colours.black }}>    Quick collection</Text>
-                            </View>
-
-                            <View style={{ top: 130 }}>
-                                <RegButtons title={"Reserve"} onPress={toggleBottomSheet} />
-                            </View>
-
-                            <View style={{ top: 140 }}>
-                                <RegButtons title={"Donate"} onPress={()=>console.log("donate")} />
-                            </View>
-
                         </View>
-                    </View>
 
+                    </Animated.View>
                 </Animated.View>
             </Animated.View>
         </View>
@@ -319,6 +424,13 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         top: 10,
+        // marginBottom:20,
+    },
+    donquantityContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        top: 10,
+        marginBottom: 15,
     },
     quantity: {
         marginHorizontal: 20,
@@ -365,4 +477,8 @@ const styles = StyleSheet.create({
         fontSize: 15,
         fontWeight: "600"
     },
+    picker: {
+        marginTop: 20,
+        marginBottom: 15
+    }
 })

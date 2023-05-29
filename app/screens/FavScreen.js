@@ -36,8 +36,8 @@ const Listing = [
         oldPrice: 10,
         image: require('../assets/dounts.jpg'),
         count: 2,
-        rate: 5,
-        collect: '7:00-8:00'
+        rate: 4,
+        collect: '3:30-5:00'
     },
     {
         id: 6,
@@ -46,8 +46,8 @@ const Listing = [
         oldPrice: 30,
         image: require('../assets/pizza.jpg'),
         count: 3,
-        rate: 5,
-        collect: '7:00-8:00'
+        rate: 3,
+        collect: '1:00-2:00'
     },
     {
         id: 3,
@@ -57,7 +57,7 @@ const Listing = [
         image: require('../assets/shawerma.avif'),
         count: 9,
         rate: 5,
-        collect: '7:00-8:00'
+        collect: '3:30-4:00'
     },
     {
         id: 4,
@@ -77,7 +77,7 @@ const BuyListing = [
         id: 1,
         title: 'Popeyes',
         subTitle: 20,
-        oldPrice: 10,
+        oldPrice: 25,
         image: require('../assets/popeyes.webp'),
         count: 8,
         quantity: 5,
@@ -204,8 +204,8 @@ export default function FavScreen() {
                         data={BuyListing}
                         keyExtractor={BuyListing => BuyListing.id.toString()}
                         renderItem={({ item }) =>
-                            <MyCart quantity={item.quantity} unCode={item.code} title={item.title} subTitle={"$" + item.subTitle}
-                                image={item.image} prePrice={"$" + item.oldPrice} onPress={() => onPress={toggleBottomSheet}} />
+                            <MyCart quantity={item.quantity} unCode={item.code} title={item.title} subTitle={ item.subTitle}
+                                image={item.image} prePrice={ item.oldPrice} onPress={() => onPress={toggleBottomSheet}} />
                         }
                     />
                 </View>
@@ -225,7 +225,7 @@ export default function FavScreen() {
                     data={Listing}
                     keyExtractor={listing => listing.id.toString()}
                     renderItem={({ item }) =>
-                        <CardRes Animate={true} noAnimate={false} showFavIcon={true} addStyle={styles.addToCartBtn} style={styles.card} title={item.title} subTitle={"$" + item.subTitle} image={item.image} showCount={false}
+                        <CardRes collect={item.collect} rate={item.rate} Animate={true} noAnimate={false} showFavIcon={true} addStyle={styles.addToCartBtn} style={styles.card} title={item.title} subTitle={ item.subTitle} image={item.image} showCount={false}
                             onPress={() => navigation.navigate("Favourites", { screen: "Details", params: { ...item } })}
                         />}
                 />

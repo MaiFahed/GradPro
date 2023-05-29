@@ -14,41 +14,11 @@ const Listing = [
   {
     id: 1,
     title: 'KFC',
-    subTitle: 100,
+    subTitle: 10,
     image: require('../assets/checken.png'),
     count: 10,
     rate: 5,
     collect: '1:30-4:00',
-    oldPrice: 5.5,
-  },
-  {
-    id: 2,
-    title: "90's Burger",
-    subTitle: 200,
-    image: require('../assets/burger.jpg'),
-    count: 15,
-    rate: 4,
-    collect: '2:00-5:00',
-    oldPrice: 95,
-  },
-  {
-    id: 3,
-    title: 'Shawerman',
-    subTitle: 200,
-    image: require('../assets/shawerma.avif'),
-    count: 9,
-    rate: 3,
-    collect: '3:30-4:00',
-    oldPrice: 15,
-  },
-  {
-    id: 4,
-    title: 'Ward Restaurant',
-    subTitle: 200,
-    image: require('../assets/musakhan.png'),
-    count: 7,
-    rate: 2,
-    collect: '4:00-5:00',
     oldPrice: 25,
   },
 ];
@@ -95,8 +65,8 @@ export default function Search() {
             placeholder='Search'
             style={styles.searchInput} />
         </View>
-        <View style={{ paddingLeft: 15, paddingTop:10 }}>
-          <Text style={{fontWeight:'bold', fontSize:20}}>{displayText} :</Text>
+        <View style={{ paddingLeft: 15, paddingTop: 10 }}>
+          <Text style={{ fontWeight: 'bold', fontSize: 20 }}>{displayText} :</Text>
         </View>
       </View>
 
@@ -123,7 +93,7 @@ export default function Search() {
         data={Listing}
         keyExtractor={listing => listing.id.toString()}
         renderItem={({ item }) =>
-          <CardRes Animate={false} noAnimate={true} showFavIcon={false} addStyle={styles.addToCartBtn} style={styles.card} title={item.title} subTitle={"$" + item.subTitle} image={item.image} showCount={false}
+          <CardRes rate={item.rate} collect={item.collect} Animate={false} noAnimate={true} showFavIcon={false} addStyle={styles.addToCartBtn} style={styles.card} title={item.title} subTitle={item.subTitle} image={item.image} showCount={false}
             onPress={() => navigation.navigate("DiscoverFeed", { screen: "Details", params: { ...item } })}
           />
         }

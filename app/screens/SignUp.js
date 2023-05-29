@@ -25,18 +25,18 @@ const validationSchema = Yup.object().shape({
 });
 
 export default function SignIn() {
-    const [location, setLocation]= useState();
+    // const [location, setLocation]= useState();
 
-    const getLocation=  ()=> {
-        const { granted } =  Location.requestBackgroundPermissionsAsync();
-        if(!granted) return;
-        const {coords : { latitude, longitude}} = Location.getLastKnownPositionAsync(); // or current position
-        setLocation({ latitude, longitude})
-    }
+    // const getLocation=  ()=> {
+    //     const { granted } =  Location.requestBackgroundPermissionsAsync();
+    //     if(!granted) return;
+    //     const {coords : { latitude, longitude}} = Location.getLastKnownPositionAsync(); // or current position
+    //     setLocation({ latitude, longitude})
+    // }
 
-    useEffect( ()=>{
-       getLocation();
-    }, [])
+    // useEffect( ()=>{
+    //    getLocation();
+    // }, [])
 
     const navigation = useNavigation();
     return (

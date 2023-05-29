@@ -18,32 +18,32 @@ const Listing = [
     {
         id: 1,
         title: 'KFC',
-        subTitle: 100,
+        subTitle: 10,
         image: require('../assets/checken.png'),
         count: 10,
         rate: 5,
         collect: '1:30-4:00',
-        oldPrice:5.5,
+        oldPrice:25,
     },
     {
         id: 2,
         title: "90's Burger",
-        subTitle: 200,
+        subTitle: 20,
         image: require('../assets/burger.jpg'),
         count: 15,
         rate: 4,
         collect: '2:00-5:00',
-        oldPrice:95,
+        oldPrice:35,
     },
     {
         id: 3,
         title: 'Shawerman',
-        subTitle: 200,
+        subTitle: 15,
         image: require('../assets/shawerma.avif'),
         count: 9,
         rate: 3,
         collect: '3:30-4:00',
-        oldPrice:15,
+        oldPrice:22,
     },
     {
         id: 4,
@@ -61,17 +61,17 @@ const ListingB = [
     {
         id: 1,
         title: 'Wakeup Coffee',
-        subTitle: 100,
+        subTitle: 12,
         image: require('../assets/dounts.jpg'),
         count: 2,
         rate: 4,
         collect: '3:30-5:00',
-        oldPrice:55,
+        oldPrice:17,
     },
     {
         id: 2,
         title: 'Mono Pizza',
-        subTitle: 200,
+        subTitle: 17,
         image: require('../assets/pizza.jpg'),
         count: 3,
         rate: 2,
@@ -81,22 +81,22 @@ const ListingB = [
     {
         id: 3,
         title: 'Mom Cake',
-        subTitle: 200,
+        subTitle: 22,
         image: require('../assets/mooncake.jpg'),
         count: 4,
         rate: 1.5,
         collect: '3:00-5:00',
-        oldPrice:50,
+        oldPrice:40,
     },
     {
         id: 4,
         title: 'Mrs Crepe',
-        subTitle: 200,
+        subTitle: 14,
         image: require('../assets/crepe.webp'),
         count: 1,
         rate:3.5,
         collect: '6:00-8:00',
-        oldPrice:100,
+        oldPrice:55,
     },
 ];
 
@@ -104,32 +104,32 @@ const ListingC = [
     {
         id: 1,
         title: 'Popeyes',
-        subTitle: 100,
+        subTitle: 16,
         image: require('../assets/popeyes.webp'),
         count: 8,
         rate: 5,
         collect: '7:30-9:00',
-        oldPrice:3,
+        oldPrice:27,
     },
     {
         id: 2,
         title: 'Fresh Froyo',
-        subTitle: 200,
+        subTitle: 6,
         image: require('../assets/freshFroyojpg.jpg'),
         count: 6,
         rate: 2.5,
         collect: '7:00-8:30',
-        oldPrice:5,
+        oldPrice:12,
     },
     {
         id: 3,
         title: 'Mandalina',
-        subTitle: 200,
+        subTitle: 14,
         image: require('../assets/juice.jpg'),
         count: 4,
         rate: 4,
         collect: '6:00-8:00',
-        oldPrice:7,
+        oldPrice:25,
     },
     {
         id: 4,
@@ -186,6 +186,24 @@ export default function DiscoverScreen() {
                             />
                         }
                     />
+                </View>
+                <View style={{ width: '100%', top: 80, backgroundColor: colours.beige }}>
+                    <Text style={styles.text}> Groceries </Text>
+                    <FlatList horizontal showsHorizontalScrollIndicator={false}
+                        data={ListingB}
+                        keyExtractor={ListingB => ListingB.id.toString()}
+                        renderItem={({ item }) =>
+                            <CardRes Animate={false} noAnimate={true} showFavIcon={false} addStyle={styles.addToCartBtn} style={styles.card} title={item.title} subTitle={item.subTitle} image={item.image} showCount={false} count={item.count + " left"} rate={item.rate} collect={item.collect}
+                                onPress={() => navigation.navigate("DiscoverFeed", { screen: "Details", params: { ...item } })}
+                            />
+                        }
+                    />
+                </View>
+                <View style={{ width: '100%', top: 80, backgroundColor: colours.beige }}>
+                    <Text style={styles.text}> Coming Soon </Text>
+                </View>
+                <View style={{ width: '100%', top: 80, backgroundColor: colours.beige }}>
+                    <Text style={styles.text}> Coming Soon </Text>
                 </View>
                 <View style={{ width: '100%', top: 80, backgroundColor: colours.beige }}>
                     <Text style={styles.text}> Coming Soon </Text>

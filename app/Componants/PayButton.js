@@ -3,11 +3,11 @@ import React from 'react'
 import { Button } from 'react-native-elements';
 import colours from './colours';
 
-export default function ApplePayButton({onPress}) {
+export default function ApplePayButton({onPress, title}) {
     return (
       <View>
         <Button
-          title=' Add to Cart'
+          title={title}
           type="solid"
           onPress={onPress}
           buttonStyle={{
